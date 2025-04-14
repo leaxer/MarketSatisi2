@@ -23,5 +23,12 @@ namespace MarketSatis1
             kasiyerSayfa.Show();
             this.Hide();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DükkanSayfa dükkanSayfa = new DükkanSayfa();
+            dükkanSayfa.Show();
+            this.Hide();
+        }
     }
 }

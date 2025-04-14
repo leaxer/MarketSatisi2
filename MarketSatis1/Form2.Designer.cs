@@ -30,45 +30,38 @@
         {
             button1 = new Button();
             button2 = new Button();
-            button3 = new Button();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(102, 147);
+            button1.Location = new Point(159, 110);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(159, 97);
+            button1.Size = new Size(139, 73);
             button1.TabIndex = 0;
             button1.Text = "Ürün Sayfası";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
-            button2.Location = new Point(325, 147);
+            button2.Location = new Point(395, 110);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(162, 97);
+            button2.Size = new Size(142, 73);
             button2.TabIndex = 1;
-            button2.Text = "Kasiyer Sayfası";
+            button2.Text = "Dükkan Sayfası";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
-            // button3
-            // 
-            button3.Location = new Point(547, 147);
-            button3.Name = "button3";
-            button3.Size = new Size(159, 96);
-            button3.TabIndex = 2;
-            button3.Text = "Stok Sayfası";
-            button3.UseVisualStyleBackColor = true;
-            // 
             // Form2
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(button3);
+            ClientSize = new Size(700, 338);
             Controls.Add(button2);
             Controls.Add(button1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Form2";
             Text = "Form2";
             ResumeLayout(false);
