@@ -74,6 +74,7 @@
             Ürünler.Name = "Ürünler";
             Ürünler.Size = new Size(236, 304);
             Ürünler.TabIndex = 2;
+            Ürünler.SelectedIndexChanged += Ürünler_SelectedIndexChanged;
             // 
             // label2
             // 
@@ -129,6 +130,7 @@
             Sepet.Name = "Sepet";
             Sepet.Size = new Size(311, 204);
             Sepet.TabIndex = 8;
+            Sepet.SelectedIndexChanged += Sepet_SelectedIndexChanged;
             // 
             // label4
             // 
@@ -154,6 +156,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(113, 27);
             textBox1.TabIndex = 11;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // label6
             // 
@@ -179,6 +182,7 @@
             button1.TabIndex = 14;
             button1.Text = "Toplam Tutar Hesapla";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
@@ -188,6 +192,7 @@
             button2.TabIndex = 15;
             button2.Text = "Hesapla";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button3
             // 
@@ -197,6 +202,7 @@
             button3.TabIndex = 16;
             button3.Text = "Sepete Ekle";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // label7
             // 
@@ -246,6 +252,7 @@
             button5.TabIndex = 21;
             button5.Text = "Dükkan İşlemleri";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // DükkanSayfa
             // 
