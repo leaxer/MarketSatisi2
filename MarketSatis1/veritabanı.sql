@@ -1,6 +1,13 @@
 create database marketsatis;
 use marketsatis;
 
+create table kasiyerler (
+id int auto_increment primary key,
+kasiyer_adi varchar(50) not null,
+kasiyer_soyadi varchar(50) not null,
+kasiyer_no int
+)
+
 CREATE TABLE urunler (
     id INT AUTO_INCREMENT PRIMARY KEY,
     urun_kodu VARCHAR(50) NOT NULL,

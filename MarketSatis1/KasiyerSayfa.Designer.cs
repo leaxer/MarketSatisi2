@@ -59,10 +59,10 @@
             label10 = new Label();
             label9 = new Label();
             tabPage5 = new TabPage();
-            button6 = new Button();
-            textBox9 = new TextBox();
-            textBox8 = new TextBox();
-            textBox7 = new TextBox();
+            btnKasiyerEkle = new Button();
+            txtKasiyerNo = new TextBox();
+            txtKasiyerSoyadi = new TextBox();
+            txtKasiyerAdi = new TextBox();
             label13 = new Label();
             label12 = new Label();
             label11 = new Label();
@@ -373,10 +373,10 @@
             // 
             // tabPage5
             // 
-            tabPage5.Controls.Add(button6);
-            tabPage5.Controls.Add(textBox9);
-            tabPage5.Controls.Add(textBox8);
-            tabPage5.Controls.Add(textBox7);
+            tabPage5.Controls.Add(btnKasiyerEkle);
+            tabPage5.Controls.Add(txtKasiyerNo);
+            tabPage5.Controls.Add(txtKasiyerSoyadi);
+            tabPage5.Controls.Add(txtKasiyerAdi);
             tabPage5.Controls.Add(label13);
             tabPage5.Controls.Add(label12);
             tabPage5.Controls.Add(label11);
@@ -387,44 +387,45 @@
             tabPage5.Text = "Kasiyer Ekle";
             tabPage5.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // btnKasiyerEkle
             // 
-            button6.Location = new Point(243, 188);
-            button6.Name = "button6";
-            button6.Size = new Size(87, 33);
-            button6.TabIndex = 6;
-            button6.Text = "Ekle";
-            button6.UseVisualStyleBackColor = true;
+            btnKasiyerEkle.Location = new Point(243, 188);
+            btnKasiyerEkle.Name = "btnKasiyerEkle";
+            btnKasiyerEkle.Size = new Size(87, 33);
+            btnKasiyerEkle.TabIndex = 6;
+            btnKasiyerEkle.Text = "Ekle";
+            btnKasiyerEkle.UseVisualStyleBackColor = true;
+            btnKasiyerEkle.Click += btnKasiyerEkle_Click;
             // 
-            // textBox9
+            // txtKasiyerNo
             // 
-            textBox9.Location = new Point(211, 128);
-            textBox9.Name = "textBox9";
-            textBox9.Size = new Size(119, 23);
-            textBox9.TabIndex = 5;
+            txtKasiyerNo.Location = new Point(211, 128);
+            txtKasiyerNo.Name = "txtKasiyerNo";
+            txtKasiyerNo.Size = new Size(119, 23);
+            txtKasiyerNo.TabIndex = 5;
             // 
-            // textBox8
+            // txtKasiyerSoyadi
             // 
-            textBox8.Location = new Point(211, 78);
-            textBox8.Name = "textBox8";
-            textBox8.Size = new Size(119, 23);
-            textBox8.TabIndex = 4;
+            txtKasiyerSoyadi.Location = new Point(211, 78);
+            txtKasiyerSoyadi.Name = "txtKasiyerSoyadi";
+            txtKasiyerSoyadi.Size = new Size(119, 23);
+            txtKasiyerSoyadi.TabIndex = 4;
             // 
-            // textBox7
+            // txtKasiyerAdi
             // 
-            textBox7.Location = new Point(211, 35);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(119, 23);
-            textBox7.TabIndex = 3;
+            txtKasiyerAdi.Location = new Point(211, 35);
+            txtKasiyerAdi.Name = "txtKasiyerAdi";
+            txtKasiyerAdi.Size = new Size(119, 23);
+            txtKasiyerAdi.TabIndex = 3;
             // 
             // label13
             // 
             label13.AutoSize = true;
             label13.Location = new Point(111, 131);
             label13.Name = "label13";
-            label13.Size = new Size(69, 15);
+            label13.Size = new Size(66, 15);
             label13.TabIndex = 2;
-            label13.Text = "Sigorta No :";
+            label13.Text = "Kasiyer No:";
             // 
             // label12
             // 
@@ -506,10 +507,10 @@
         private Label label13;
         private Label label12;
         private Label label11;
-        private Button button6;
-        private TextBox textBox9;
-        private TextBox textBox8;
-        private TextBox textBox7;
+        private Button btnKasiyerEkle;
+        private TextBox txtKasiyerNo;
+        private TextBox txtKasiyerSoyadi;
+        private TextBox txtKasiyerAdi;
         private Button btnGuncelle;
     }
 }
