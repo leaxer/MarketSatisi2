@@ -30,29 +30,29 @@
         {
             components = new System.ComponentModel.Container();
             label1 = new Label();
-            Ürünler = new ListBox();
+            lstUrunler = new ListBox();
             label2 = new Label();
             label3 = new Label();
             contextMenuStrip1 = new ContextMenuStrip(components);
             tbToolStripMenuItem = new ToolStripMenuItem();
-            textBox2 = new TextBox();
-            numericUpDown1 = new NumericUpDown();
-            Sepet = new ListBox();
+            txtTutar = new TextBox();
+            numAdet = new NumericUpDown();
+            lstSepet = new ListBox();
             label4 = new Label();
             label5 = new Label();
-            textBox1 = new TextBox();
+            txtToplamTutar = new TextBox();
             label6 = new Label();
-            textBox3 = new TextBox();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
+            txtIndirimliTutar = new TextBox();
+            btnToplamTutarHesapla = new Button();
+            btnHesapla = new Button();
+            btnSepeteEkle = new Button();
             label7 = new Label();
-            radioButton1 = new RadioButton();
-            radioButton2 = new RadioButton();
+            rbNakit = new RadioButton();
+            rbKrediKarti = new RadioButton();
             button4 = new Button();
-            button5 = new Button();
+            buttobn5 = new Button();
             contextMenuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numAdet).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -66,15 +66,15 @@
             label1.Text = "ÜRÜNLER";
             label1.Click += label1_Click;
             // 
-            // Ürünler
+            // lstUrunler
             // 
-            Ürünler.FormattingEnabled = true;
-            Ürünler.Location = new Point(29, 67);
-            Ürünler.Margin = new Padding(3, 4, 3, 4);
-            Ürünler.Name = "Ürünler";
-            Ürünler.Size = new Size(236, 304);
-            Ürünler.TabIndex = 2;
-            Ürünler.SelectedIndexChanged += Ürünler_SelectedIndexChanged;
+            lstUrunler.FormattingEnabled = true;
+            lstUrunler.Location = new Point(29, 67);
+            lstUrunler.Margin = new Padding(3, 4, 3, 4);
+            lstUrunler.Name = "lstUrunler";
+            lstUrunler.Size = new Size(292, 304);
+            lstUrunler.TabIndex = 2;
+            lstUrunler.SelectedIndexChanged += Ürünler_SelectedIndexChanged;
             // 
             // label2
             // 
@@ -109,28 +109,29 @@
             tbToolStripMenuItem.Size = new Size(92, 24);
             tbToolStripMenuItem.Text = "tb";
             // 
-            // textBox2
+            // txtTutar
             // 
-            textBox2.Location = new Point(79, 491);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(112, 27);
-            textBox2.TabIndex = 6;
+            txtTutar.Location = new Point(79, 491);
+            txtTutar.Name = "txtTutar";
+            txtTutar.Size = new Size(112, 27);
+            txtTutar.TabIndex = 6;
             // 
-            // numericUpDown1
+            // numAdet
             // 
-            numericUpDown1.Location = new Point(81, 425);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(94, 27);
-            numericUpDown1.TabIndex = 7;
+            numAdet.Location = new Point(81, 425);
+            numAdet.Name = "numAdet";
+            numAdet.Size = new Size(94, 27);
+            numAdet.TabIndex = 7;
+            numAdet.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // Sepet
+            // lstSepet
             // 
-            Sepet.FormattingEnabled = true;
-            Sepet.Location = new Point(483, 89);
-            Sepet.Name = "Sepet";
-            Sepet.Size = new Size(311, 204);
-            Sepet.TabIndex = 8;
-            Sepet.SelectedIndexChanged += Sepet_SelectedIndexChanged;
+            lstSepet.FormattingEnabled = true;
+            lstSepet.Location = new Point(483, 89);
+            lstSepet.Name = "lstSepet";
+            lstSepet.Size = new Size(311, 204);
+            lstSepet.TabIndex = 8;
+            lstSepet.SelectedIndexChanged += Sepet_SelectedIndexChanged;
             // 
             // label4
             // 
@@ -144,65 +145,65 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(541, 425);
+            label5.Location = new Point(465, 421);
             label5.Name = "label5";
             label5.Size = new Size(104, 20);
             label5.TabIndex = 10;
             label5.Text = "Toplam Tutar :";
             // 
-            // textBox1
+            // txtToplamTutar
             // 
-            textBox1.Location = new Point(661, 418);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(113, 27);
-            textBox1.TabIndex = 11;
-            textBox1.TextChanged += textBox1_TextChanged;
+            txtToplamTutar.Location = new Point(575, 418);
+            txtToplamTutar.Name = "txtToplamTutar";
+            txtToplamTutar.Size = new Size(113, 27);
+            txtToplamTutar.TabIndex = 11;
+            txtToplamTutar.TextChanged += textBox1_TextChanged;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(541, 469);
+            label6.Location = new Point(465, 471);
             label6.Name = "label6";
             label6.Size = new Size(109, 20);
             label6.TabIndex = 12;
             label6.Text = "İndirimli Tutar :";
             // 
-            // textBox3
+            // txtIndirimliTutar
             // 
-            textBox3.Location = new Point(661, 462);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(113, 27);
-            textBox3.TabIndex = 13;
+            txtIndirimliTutar.Location = new Point(580, 468);
+            txtIndirimliTutar.Name = "txtIndirimliTutar";
+            txtIndirimliTutar.Size = new Size(113, 27);
+            txtIndirimliTutar.TabIndex = 13;
             // 
-            // button1
+            // btnToplamTutarHesapla
             // 
-            button1.Location = new Point(661, 326);
-            button1.Name = "button1";
-            button1.Size = new Size(201, 66);
-            button1.TabIndex = 14;
-            button1.Text = "Toplam Tutar Hesapla";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnToplamTutarHesapla.Location = new Point(661, 326);
+            btnToplamTutarHesapla.Name = "btnToplamTutarHesapla";
+            btnToplamTutarHesapla.Size = new Size(201, 66);
+            btnToplamTutarHesapla.TabIndex = 14;
+            btnToplamTutarHesapla.Text = "Toplam Tutar Hesapla";
+            btnToplamTutarHesapla.UseVisualStyleBackColor = true;
+            btnToplamTutarHesapla.Click += btnToplamTutarHesapla_Click;
             // 
-            // button2
+            // btnHesapla
             // 
-            button2.Location = new Point(239, 425);
-            button2.Name = "button2";
-            button2.Size = new Size(112, 43);
-            button2.TabIndex = 15;
-            button2.Text = "Hesapla";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            btnHesapla.Location = new Point(239, 416);
+            btnHesapla.Name = "btnHesapla";
+            btnHesapla.Size = new Size(112, 43);
+            btnHesapla.TabIndex = 15;
+            btnHesapla.Text = "Hesapla";
+            btnHesapla.UseVisualStyleBackColor = true;
+            btnHesapla.Click += btnHesapla_Click;
             // 
-            // button3
+            // btnSepeteEkle
             // 
-            button3.Location = new Point(239, 491);
-            button3.Name = "button3";
-            button3.Size = new Size(112, 47);
-            button3.TabIndex = 16;
-            button3.Text = "Sepete Ekle";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            btnSepeteEkle.Location = new Point(239, 471);
+            btnSepeteEkle.Name = "btnSepeteEkle";
+            btnSepeteEkle.Size = new Size(112, 47);
+            btnSepeteEkle.TabIndex = 16;
+            btnSepeteEkle.Text = "Sepete Ekle";
+            btnSepeteEkle.UseVisualStyleBackColor = true;
+            btnSepeteEkle.Click += btnSepeteEkle_Click;
             // 
             // label7
             // 
@@ -213,27 +214,29 @@
             label7.TabIndex = 17;
             label7.Text = "Ödeme Yöntemi :";
             // 
-            // radioButton1
+            // rbNakit
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(465, 347);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(65, 24);
-            radioButton1.TabIndex = 18;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Nakit";
-            radioButton1.UseVisualStyleBackColor = true;
+            rbNakit.AutoSize = true;
+            rbNakit.Location = new Point(465, 347);
+            rbNakit.Name = "rbNakit";
+            rbNakit.Size = new Size(65, 24);
+            rbNakit.TabIndex = 18;
+            rbNakit.TabStop = true;
+            rbNakit.Text = "Nakit";
+            rbNakit.UseVisualStyleBackColor = true;
+            rbNakit.CheckedChanged += rbNakit_CheckedChanged_1;
             // 
-            // radioButton2
+            // rbKrediKarti
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(541, 347);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(100, 24);
-            radioButton2.TabIndex = 19;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Kredi Kartı";
-            radioButton2.UseVisualStyleBackColor = true;
+            rbKrediKarti.AutoSize = true;
+            rbKrediKarti.Location = new Point(541, 347);
+            rbKrediKarti.Name = "rbKrediKarti";
+            rbKrediKarti.Size = new Size(100, 24);
+            rbKrediKarti.TabIndex = 19;
+            rbKrediKarti.TabStop = true;
+            rbKrediKarti.Text = "Kredi Kartı";
+            rbKrediKarti.UseVisualStyleBackColor = true;
+            rbKrediKarti.CheckedChanged += rbKrediKarti_CheckedChanged_1;
             // 
             // button4
             // 
@@ -244,15 +247,15 @@
             button4.Text = "Yeni Satış İşlemleri";
             button4.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // buttobn5
             // 
-            button5.Location = new Point(483, 527);
-            button5.Name = "button5";
-            button5.Size = new Size(155, 62);
-            button5.TabIndex = 21;
-            button5.Text = "Dükkan İşlemleri";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
+            buttobn5.Location = new Point(483, 527);
+            buttobn5.Name = "buttobn5";
+            buttobn5.Size = new Size(155, 62);
+            buttobn5.TabIndex = 21;
+            buttobn5.Text = "Dükkan İşlemleri";
+            buttobn5.UseVisualStyleBackColor = true;
+            buttobn5.Click += button5_Click;
             // 
             // DükkanSayfa
             // 
@@ -260,59 +263,60 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             ClientSize = new Size(914, 600);
-            Controls.Add(button5);
+            Controls.Add(buttobn5);
             Controls.Add(button4);
-            Controls.Add(radioButton2);
-            Controls.Add(radioButton1);
+            Controls.Add(rbKrediKarti);
+            Controls.Add(rbNakit);
             Controls.Add(label7);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(textBox3);
+            Controls.Add(btnSepeteEkle);
+            Controls.Add(btnHesapla);
+            Controls.Add(btnToplamTutarHesapla);
+            Controls.Add(txtIndirimliTutar);
             Controls.Add(label6);
-            Controls.Add(textBox1);
+            Controls.Add(txtToplamTutar);
             Controls.Add(label5);
             Controls.Add(label4);
-            Controls.Add(Sepet);
-            Controls.Add(numericUpDown1);
-            Controls.Add(textBox2);
+            Controls.Add(lstSepet);
+            Controls.Add(numAdet);
+            Controls.Add(txtTutar);
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(Ürünler);
+            Controls.Add(lstUrunler);
             Controls.Add(label1);
             ForeColor = SystemColors.ActiveCaptionText;
             Margin = new Padding(3, 4, 3, 4);
             Name = "DükkanSayfa";
             Text = "DükkanSayfa";
-            Load += DükkanSayfa_Load_1;
+            Load += DükkanSayfa_Load;
             contextMenuStrip1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numAdet).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
         private Label label1;
-        private ListBox Ürünler;
+        private ListBox lstUrunler;
         private Label label2;
         private Label label3;
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem tbToolStripMenuItem;
-        private TextBox textBox2;
-        private NumericUpDown numericUpDown1;
-        private ListBox Sepet;
+        private TextBox txtTutar;
+        private NumericUpDown numAdet;
+        private ListBox lstSepet;
         private Label label4;
         private Label label5;
-        private TextBox textBox1;
+        private TextBox txtToplamTutar;
         private Label label6;
-        private TextBox textBox3;
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private TextBox txtIndirimliTutar;
+        private Button btnToplamTutarHesapla;
+        private Button btnHesapla;
+        private Button btnSepeteEkle;
         private Label label7;
-        private RadioButton radioButton1;
-        private RadioButton radioButton2;
+        private RadioButton rbNakit;
+        private RadioButton rbKrediKarti;
         private Button button4;
-        private Button button5;
+        private Button buttobn5;
+        private Button btnSiparisiOnayla;
     }
 }
