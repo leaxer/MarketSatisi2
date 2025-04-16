@@ -19,7 +19,7 @@ namespace MarketSatis1
 
         private void label1_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void DükkanSayfa_Load(object sender, EventArgs e)
@@ -75,9 +75,6 @@ namespace MarketSatis1
         private void button5_Click(object sender, EventArgs e)
         {
 
-            KasiyerSayfa kasiyerSayfa = new KasiyerSayfa();
-            kasiyerSayfa.Show();
-            this.Hide();
         }
     }
 }
