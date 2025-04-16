@@ -285,11 +285,16 @@ namespace MarketSatis1
             }
         }
 
-        private void btnSatısIslemler(object sender, EventArgs e)
+        private void btnSatısIslemleri_Click(object sender, EventArgs e)
         {
             DükkanSayfa dükkanSayfa = new DükkanSayfa();
             dükkanSayfa.Show();
             this.Hide();
+        }
+
+        private void txtUrunKodu_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

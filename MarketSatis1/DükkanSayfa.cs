@@ -37,7 +37,6 @@ namespace MarketSatis1
             }
         }
 
-        // Sepet öğesi sınıfı
         public class SepetItem
         {
             public Urun Urun { get; set; }
@@ -58,7 +57,6 @@ namespace MarketSatis1
         {
             UrunleriYukle();
 
-            // Başlangıç ayarları
             numAdet.Value = 0;
             txtTutar.ReadOnly = true;
             txtToplamTutar.ReadOnly = true;
@@ -139,10 +137,9 @@ namespace MarketSatis1
 
             txtToplamTutar.Text = toplam.ToString("C2");
 
-            // Ödeme yöntemine göre indirimli tutarı hesapla
             if (krediKartiSecili)
             {
-                decimal indirimliTutar = toplam * 1.03m; // %3 KDV ekle
+                decimal indirimliTutar = toplam * 1.03m; 
                 txtIndirimliTutar.Text = indirimliTutar.ToString("C2");
             }
             else
@@ -150,7 +147,6 @@ namespace MarketSatis1
                 txtIndirimliTutar.Text = toplam.ToString("C2");
             }
 
-            // Siparişi Onayla butonu ekle (eğer daha önce eklenmemişse)
             if (!Controls.ContainsKey("btnSiparisiOnayla"))
             {
                 Button btnSiparisiOnayla = new Button();
@@ -173,7 +169,6 @@ namespace MarketSatis1
                 {
                     conn.Open();
 
-                    // Sipariş kaydı ekle
                     string insertSiparisQuery = "INSERT INTO siparisler (siparis_tarihi, toplam_tutar, odeme_yontemi) VALUES (@siparisTarihi, @toplamTutar, @odemeYontemi)";
                     int siparisId = 0;
 
@@ -187,10 +182,8 @@ namespace MarketSatis1
                         siparisId = (int)cmd.LastInsertedId;
                     }
 
-                    // Sipariş detayları ekle ve stok güncelle
                     foreach (SepetItem item in sepetListesi)
                     {
-                        // Sipariş detayı ekle
                         string insertDetayQuery = "INSERT INTO siparis_detaylari (siparis_id, urun_kodu, adet, birim_fiyat) VALUES (@siparisId, @urunKodu, @adet, @birimFiyat)";
 
                         using (MySqlCommand cmd = new MySqlCommand(insertDetayQuery, conn))
@@ -202,8 +195,6 @@ namespace MarketSatis1
 
                             cmd.ExecuteNonQuery();
                         }
-
-                        // Stok güncelle
                         string updateStokQuery = "UPDATE urunler SET urun_adedi = urun_adedi - @adet WHERE urun_kodu = @urunKodu";
 
                         using (MySqlCommand cmd = new MySqlCommand(updateStokQuery, conn))
@@ -218,13 +209,11 @@ namespace MarketSatis1
 
                 MessageBox.Show("Sipariş başarıyla tamamlandı!", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Sepeti temizle
                 sepetListesi.Clear();
                 lstSepet.Items.Clear();
                 txtToplamTutar.Clear();
                 txtIndirimliTutar.Clear();
 
-                // Siparişi Onayla butonunu kaldır
                 if (Controls.ContainsKey("btnSiparisiOnayla"))
                 {
                     Control btnSiparisiOnayla = Controls["btnSiparisiOnayla"];
@@ -232,7 +221,6 @@ namespace MarketSatis1
                     btnSiparisiOnayla.Dispose();
                 }
 
-                // Ürünleri tekrar yükle (stoklar güncellendi)
                 UrunleriYukle();
             }
             catch (Exception ex)
@@ -296,7 +284,6 @@ namespace MarketSatis1
             int adet = (int)numAdet.Value;
             decimal tutar = seciliUrun.Fiyat * adet;
 
-            // Sepete ekle
             SepetItem sepetItem = new SepetItem
             {
                 Urun = seciliUrun,
@@ -307,28 +294,26 @@ namespace MarketSatis1
             sepetListesi.Add(sepetItem);
             lstSepet.Items.Add(sepetItem);
 
-            // Stoktan düş
             seciliUrun.Stok -= adet;
 
-            // Formu temizle
             numAdet.Value = 0;
             txtTutar.Clear();
 
             MessageBox.Show("Ürün sepete eklendi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void btnDukkanIslemleri_Click(object sender, EventArgs e)
         {
-
+            KasiyerSayfa kasiyerSayfa = new KasiyerSayfa();
+            kasiyerSayfa.Show();
+            this.Hide();
         }
 
-        // Radio buttonlar değiştiğinde
-        private void rbNakit_CheckedChanged_1(object sender, EventArgs e)
+       private void rbNakit_CheckedChanged_1(object sender, EventArgs e)
         {
             if (rbNakit.Checked)
             {
                 krediKartiSecili = false;
-                // Toplam tutar zaten hesaplanmışsa, indirimli tutarı güncelle
                 if (!string.IsNullOrEmpty(txtToplamTutar.Text))
                 {
                     HesaplaIndirimliTutar();
@@ -341,7 +326,6 @@ namespace MarketSatis1
             if (rbKrediKarti.Checked)
             {
                 krediKartiSecili = true;
-                // Toplam tutar zaten hesaplanmışsa, indirimli tutarı güncelle
                 if (!string.IsNullOrEmpty(txtToplamTutar.Text))
                 {
                     HesaplaIndirimliTutar();
@@ -349,7 +333,6 @@ namespace MarketSatis1
             }
         }
 
-        // Toplam tutarı hesaplayan yardımcı metod
         private void HesaplaToplam()
         {
             if (sepetListesi.Count == 0)
@@ -366,13 +349,9 @@ namespace MarketSatis1
 
             txtToplamTutar.Text = toplam.ToString("C2");
 
-            // İndirimli tutarı hesapla
             HesaplaIndirimliTutar();
 
-
         }
-
-        // İndirimli tutarı hesaplayan yardımcı metod
         private void HesaplaIndirimliTutar()
         {
             if (string.IsNullOrEmpty(txtToplamTutar.Text))
@@ -382,7 +361,7 @@ namespace MarketSatis1
 
             if (krediKartiSecili)
             {
-                decimal indirimliTutar = toplam * 1.03m; // %3 KDV ekle
+                decimal indirimliTutar = toplam * 1.03m;
                 txtIndirimliTutar.Text = indirimliTutar.ToString("C2");
             }
             else

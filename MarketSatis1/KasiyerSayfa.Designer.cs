@@ -84,10 +84,9 @@
             tabControl1.Controls.Add(tabPage4);
             tabControl1.Controls.Add(tabPage5);
             tabControl1.Location = new Point(0, 0);
-            tabControl1.Margin = new Padding(3, 4, 3, 4);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(800, 435);
+            tabControl1.Size = new Size(700, 326);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -95,32 +94,30 @@
             tabPage1.Controls.Add(btnSatısIslemleri);
             tabPage1.Controls.Add(label1);
             tabPage1.Controls.Add(lstUrunler);
-            tabPage1.Location = new Point(4, 29);
-            tabPage1.Margin = new Padding(3, 4, 3, 4);
+            tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3, 4, 3, 4);
-            tabPage1.Size = new Size(792, 402);
+            tabPage1.Padding = new Padding(3, 3, 3, 3);
+            tabPage1.Size = new Size(692, 298);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Ürün Kataloğu";
             tabPage1.UseVisualStyleBackColor = true;
             // 
             // btnSatısIslemleri
             // 
-            btnSatısIslemleri.Location = new Point(330, 350);
-            btnSatısIslemleri.Margin = new Padding(3, 4, 3, 4);
+            btnSatısIslemleri.Location = new Point(286, 248);
             btnSatısIslemleri.Name = "btnSatısIslemleri";
-            btnSatısIslemleri.Size = new Size(151, 52);
+            btnSatısIslemleri.Size = new Size(132, 39);
             btnSatısIslemleri.TabIndex = 2;
             btnSatısIslemleri.Text = "Satış İşlemleri";
             btnSatısIslemleri.UseVisualStyleBackColor = true;
-            btnSatısIslemleri.Click += btnSatısIslemler;
+            btnSatısIslemleri.Click += btnSatısIslemleri_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(85, 33);
+            label1.Location = new Point(8, 25);
             label1.Name = "label1";
-            label1.Size = new Size(104, 20);
+            label1.Size = new Size(83, 15);
             label1.TabIndex = 1;
             label1.Text = "Ürün Kataloğu";
             label1.Click += label1_Click;
@@ -128,10 +125,10 @@
             // lstUrunler
             // 
             lstUrunler.FormattingEnabled = true;
-            lstUrunler.Location = new Point(30, 78);
-            lstUrunler.Margin = new Padding(3, 4, 3, 4);
+            lstUrunler.ItemHeight = 15;
+            lstUrunler.Location = new Point(8, 43);
             lstUrunler.Name = "lstUrunler";
-            lstUrunler.Size = new Size(249, 324);
+            lstUrunler.Size = new Size(255, 244);
             lstUrunler.TabIndex = 0;
             lstUrunler.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
@@ -149,121 +146,115 @@
             tabPage2.Controls.Add(label4);
             tabPage2.Controls.Add(label3);
             tabPage2.Controls.Add(label2);
-            tabPage2.Location = new Point(4, 29);
-            tabPage2.Margin = new Padding(3, 4, 3, 4);
+            tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3, 4, 3, 4);
-            tabPage2.Size = new Size(792, 402);
+            tabPage2.Padding = new Padding(3, 3, 3, 3);
+            tabPage2.Size = new Size(692, 298);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Ürün Ekle";
             tabPage2.UseVisualStyleBackColor = true;
             // 
             // btnEkle
             // 
-            btnEkle.Location = new Point(225, 347);
-            btnEkle.Margin = new Padding(3, 4, 3, 4);
+            btnEkle.Location = new Point(197, 260);
             btnEkle.Name = "btnEkle";
-            btnEkle.Size = new Size(86, 43);
-            btnEkle.TabIndex = 11;
+            btnEkle.Size = new Size(75, 32);
+            btnEkle.TabIndex = 6;
             btnEkle.Text = "Ekle";
             btnEkle.UseVisualStyleBackColor = true;
             btnEkle.Click += btnEkle_Click;
             // 
             // button2
             // 
-            button2.Location = new Point(469, 347);
-            button2.Margin = new Padding(3, 4, 3, 4);
+            button2.Location = new Point(410, 260);
             button2.Name = "button2";
-            button2.Size = new Size(192, 43);
-            button2.TabIndex = 10;
+            button2.Size = new Size(168, 32);
+            button2.TabIndex = 7;
             button2.Text = "Hesap Defterini Görüntüle";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
             // numUrunAdedi
             // 
-            numUrunAdedi.Location = new Point(174, 304);
-            numUrunAdedi.Margin = new Padding(3, 4, 3, 4);
+            numUrunAdedi.Location = new Point(152, 228);
             numUrunAdedi.Name = "numUrunAdedi";
-            numUrunAdedi.Size = new Size(137, 27);
-            numUrunAdedi.TabIndex = 9;
+            numUrunAdedi.Size = new Size(120, 23);
+            numUrunAdedi.TabIndex = 5;
             // 
             // cmbUrunTanimi
             // 
             cmbUrunTanimi.FormattingEnabled = true;
-            cmbUrunTanimi.Location = new Point(173, 113);
-            cmbUrunTanimi.Margin = new Padding(3, 4, 3, 4);
+            cmbUrunTanimi.Items.AddRange(new object[] { "Gıda", "Bakım", "Elektronik" });
+            cmbUrunTanimi.Location = new Point(151, 85);
             cmbUrunTanimi.Name = "cmbUrunTanimi";
-            cmbUrunTanimi.Size = new Size(138, 28);
-            cmbUrunTanimi.TabIndex = 8;
+            cmbUrunTanimi.Size = new Size(121, 23);
+            cmbUrunTanimi.TabIndex = 2;
             // 
             // txtUrunAdi
             // 
-            txtUrunAdi.Location = new Point(173, 175);
-            txtUrunAdi.Margin = new Padding(3, 4, 3, 4);
+            txtUrunAdi.Location = new Point(151, 131);
             txtUrunAdi.Name = "txtUrunAdi";
-            txtUrunAdi.Size = new Size(138, 27);
-            txtUrunAdi.TabIndex = 7;
+            txtUrunAdi.Size = new Size(121, 23);
+            txtUrunAdi.TabIndex = 3;
             // 
             // txtUrunKodu
             // 
-            txtUrunKodu.Location = new Point(173, 44);
-            txtUrunKodu.Margin = new Padding(3, 4, 3, 4);
+            txtUrunKodu.Location = new Point(151, 33);
             txtUrunKodu.Name = "txtUrunKodu";
-            txtUrunKodu.Size = new Size(138, 27);
-            txtUrunKodu.TabIndex = 6;
+            txtUrunKodu.Size = new Size(121, 23);
+            txtUrunKodu.TabIndex = 1;
+            txtUrunKodu.TextChanged += txtUrunKodu_TextChanged;
             // 
             // txtUrunFiyati
             // 
-            txtUrunFiyati.Location = new Point(173, 235);
-            txtUrunFiyati.Margin = new Padding(3, 4, 3, 4);
+            txtUrunFiyati.Location = new Point(151, 176);
             txtUrunFiyati.Name = "txtUrunFiyati";
-            txtUrunFiyati.Size = new Size(138, 27);
-            txtUrunFiyati.TabIndex = 5;
+            txtUrunFiyati.Size = new Size(121, 23);
+            txtUrunFiyati.TabIndex = 4;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(71, 307);
+            label6.Location = new Point(62, 230);
             label6.Name = "label6";
-            label6.Size = new Size(91, 20);
-            label6.TabIndex = 4;
+            label6.Size = new Size(73, 15);
+            label6.TabIndex = 9;
             label6.Text = "Ürün Adedi :";
             label6.Click += label6_Click;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(71, 239);
+            label5.Location = new Point(62, 179);
             label5.Name = "label5";
-            label5.Size = new Size(86, 20);
-            label5.TabIndex = 3;
+            label5.Size = new Size(70, 15);
+            label5.TabIndex = 0;
             label5.Text = "Ürün Fiyatı :";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(71, 179);
+            label4.Location = new Point(62, 134);
             label4.Name = "label4";
-            label4.Size = new Size(74, 20);
-            label4.TabIndex = 2;
+            label4.Size = new Size(60, 15);
+            label4.TabIndex = 0;
             label4.Text = "Ürün Adı :";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(71, 117);
+            label3.Location = new Point(62, 88);
             label3.Name = "label3";
-            label3.Size = new Size(94, 20);
-            label3.TabIndex = 1;
+            label3.Size = new Size(78, 15);
+            label3.TabIndex = 0;
             label3.Text = "Ürün Tanımı :";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(71, 48);
+            label2.Location = new Point(62, 36);
             label2.Name = "label2";
-            label2.Size = new Size(86, 20);
+            label2.Size = new Size(70, 15);
             label2.TabIndex = 0;
             label2.Text = "Ürün Kodu :";
             label2.Click += label2_Click;
@@ -276,10 +267,9 @@
             tabPage3.Controls.Add(txtUrunKod);
             tabPage3.Controls.Add(label8);
             tabPage3.Controls.Add(label7);
-            tabPage3.Location = new Point(4, 29);
-            tabPage3.Margin = new Padding(3, 4, 3, 4);
+            tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(792, 402);
+            tabPage3.Size = new Size(692, 298);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Ürün Güncelle";
             tabPage3.UseVisualStyleBackColor = true;
@@ -287,10 +277,9 @@
             // 
             // btnGuncelle
             // 
-            btnGuncelle.Location = new Point(338, 180);
-            btnGuncelle.Margin = new Padding(3, 4, 3, 4);
+            btnGuncelle.Location = new Point(296, 135);
             btnGuncelle.Name = "btnGuncelle";
-            btnGuncelle.Size = new Size(97, 43);
+            btnGuncelle.Size = new Size(85, 32);
             btnGuncelle.TabIndex = 5;
             btnGuncelle.Text = "Güncelle";
             btnGuncelle.UseVisualStyleBackColor = true;
@@ -298,45 +287,42 @@
             // 
             // button4
             // 
-            button4.Location = new Point(255, 257);
-            button4.Margin = new Padding(3, 4, 3, 4);
+            button4.Location = new Point(223, 193);
             button4.Name = "button4";
-            button4.Size = new Size(181, 45);
+            button4.Size = new Size(158, 34);
             button4.TabIndex = 4;
             button4.Text = "Hesap Defterini Görüntüle";
             button4.UseVisualStyleBackColor = true;
             // 
             // numEklenecekAdet
             // 
-            numEklenecekAdet.Location = new Point(298, 108);
-            numEklenecekAdet.Margin = new Padding(3, 4, 3, 4);
+            numEklenecekAdet.Location = new Point(261, 81);
             numEklenecekAdet.Name = "numEklenecekAdet";
-            numEklenecekAdet.Size = new Size(137, 27);
+            numEklenecekAdet.Size = new Size(120, 23);
             numEklenecekAdet.TabIndex = 3;
             // 
             // txtUrunKod
             // 
-            txtUrunKod.Location = new Point(295, 43);
-            txtUrunKod.Margin = new Padding(3, 4, 3, 4);
+            txtUrunKod.Location = new Point(258, 32);
             txtUrunKod.Name = "txtUrunKod";
-            txtUrunKod.Size = new Size(140, 27);
+            txtUrunKod.Size = new Size(123, 23);
             txtUrunKod.TabIndex = 2;
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(142, 111);
+            label8.Location = new Point(124, 83);
             label8.Name = "label8";
-            label8.Size = new Size(160, 20);
+            label8.Size = new Size(128, 15);
             label8.TabIndex = 1;
             label8.Text = "Eklenecek Ürün Adedi :";
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(142, 47);
+            label7.Location = new Point(124, 35);
             label7.Name = "label7";
-            label7.Size = new Size(86, 20);
+            label7.Size = new Size(70, 15);
             label7.TabIndex = 0;
             label7.Text = "Ürün Kodu :";
             // 
@@ -346,45 +332,42 @@
             tabPage4.Controls.Add(textBox5);
             tabPage4.Controls.Add(label10);
             tabPage4.Controls.Add(label9);
-            tabPage4.Location = new Point(4, 29);
-            tabPage4.Margin = new Padding(3, 4, 3, 4);
+            tabPage4.Location = new Point(4, 24);
             tabPage4.Name = "tabPage4";
-            tabPage4.Size = new Size(792, 402);
+            tabPage4.Size = new Size(692, 298);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Hesap Defteri";
             tabPage4.UseVisualStyleBackColor = true;
             // 
             // textBox6
             // 
-            textBox6.Location = new Point(316, 109);
-            textBox6.Margin = new Padding(3, 4, 3, 4);
+            textBox6.Location = new Point(276, 82);
             textBox6.Name = "textBox6";
-            textBox6.Size = new Size(114, 27);
+            textBox6.Size = new Size(100, 23);
             textBox6.TabIndex = 3;
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(316, 40);
-            textBox5.Margin = new Padding(3, 4, 3, 4);
+            textBox5.Location = new Point(276, 30);
             textBox5.Name = "textBox5";
-            textBox5.Size = new Size(114, 27);
+            textBox5.Size = new Size(100, 23);
             textBox5.TabIndex = 2;
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(165, 116);
+            label10.Location = new Point(144, 87);
             label10.Name = "label10";
-            label10.Size = new Size(142, 20);
+            label10.Size = new Size(112, 15);
             label10.TabIndex = 1;
             label10.Text = "Toplam Satış Sayısı :";
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(165, 43);
+            label9.Location = new Point(144, 32);
             label9.Name = "label9";
-            label9.Size = new Size(145, 20);
+            label9.Size = new Size(116, 15);
             label9.TabIndex = 0;
             label9.Text = "Stoktaki Ürün Sayısı :";
             // 
@@ -397,81 +380,77 @@
             tabPage5.Controls.Add(label13);
             tabPage5.Controls.Add(label12);
             tabPage5.Controls.Add(label11);
-            tabPage5.Location = new Point(4, 29);
-            tabPage5.Margin = new Padding(3, 4, 3, 4);
+            tabPage5.Location = new Point(4, 24);
             tabPage5.Name = "tabPage5";
-            tabPage5.Size = new Size(792, 402);
+            tabPage5.Size = new Size(692, 298);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Kasiyer Ekle";
             tabPage5.UseVisualStyleBackColor = true;
             // 
             // button6
             // 
-            button6.Location = new Point(278, 251);
-            button6.Margin = new Padding(3, 4, 3, 4);
+            button6.Location = new Point(243, 188);
             button6.Name = "button6";
-            button6.Size = new Size(99, 44);
+            button6.Size = new Size(87, 33);
             button6.TabIndex = 6;
             button6.Text = "Ekle";
             button6.UseVisualStyleBackColor = true;
             // 
             // textBox9
             // 
-            textBox9.Location = new Point(241, 171);
-            textBox9.Margin = new Padding(3, 4, 3, 4);
+            textBox9.Location = new Point(211, 128);
             textBox9.Name = "textBox9";
-            textBox9.Size = new Size(135, 27);
+            textBox9.Size = new Size(119, 23);
             textBox9.TabIndex = 5;
             // 
             // textBox8
             // 
-            textBox8.Location = new Point(241, 104);
-            textBox8.Margin = new Padding(3, 4, 3, 4);
+            textBox8.Location = new Point(211, 78);
             textBox8.Name = "textBox8";
-            textBox8.Size = new Size(135, 27);
+            textBox8.Size = new Size(119, 23);
             textBox8.TabIndex = 4;
             // 
             // textBox7
             // 
-            textBox7.Location = new Point(241, 47);
-            textBox7.Margin = new Padding(3, 4, 3, 4);
+            textBox7.Location = new Point(211, 35);
             textBox7.Name = "textBox7";
-            textBox7.Size = new Size(135, 27);
+            textBox7.Size = new Size(119, 23);
             textBox7.TabIndex = 3;
             // 
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(127, 175);
+            label13.Location = new Point(111, 131);
             label13.Name = "label13";
-            label13.Size = new Size(88, 20);
+            label13.Size = new Size(69, 15);
             label13.TabIndex = 2;
             label13.Text = "Sigorta No :";
             // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(127, 108);
+            label12.Location = new Point(111, 81);
             label12.Name = "label12";
-            label12.Size = new Size(112, 20);
+            label12.Size = new Size(88, 15);
             label12.TabIndex = 1;
             label12.Text = "Kasiyer Soyadı :";
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(127, 51);
+            label11.Location = new Point(111, 38);
             label11.Name = "label11";
-            label11.Size = new Size(90, 20);
+            label11.Size = new Size(71, 15);
             label11.TabIndex = 0;
             label11.Text = "Kasiyer Adı :";
             // 
             // KasiyerSayfa
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 451);
+            ClientSize = new Size(700, 338);
             Controls.Add(tabControl1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "KasiyerSayfa";
             Text = "KasiyerSayfa";
             Load += KasiyerSayfa_Load;
