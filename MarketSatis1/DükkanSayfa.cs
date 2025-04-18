@@ -56,12 +56,6 @@ namespace MarketSatis1
         private void DükkanSayfa_Load(object sender, EventArgs e)
         {
             UrunleriYukle();
-
-            numAdet.Value = 0;
-            txtTutar.ReadOnly = true;
-            txtToplamTutar.ReadOnly = true;
-            txtIndirimliTutar.ReadOnly = true;
-            rbNakit.Checked = true;
         }
 
         private void UrunleriYukle()
@@ -139,7 +133,7 @@ namespace MarketSatis1
 
             if (krediKartiSecili)
             {
-                decimal indirimliTutar = toplam * 1.03m; 
+                decimal indirimliTutar = toplam * 1.03m;
                 txtIndirimliTutar.Text = indirimliTutar.ToString("C2");
             }
             else
@@ -163,6 +157,30 @@ namespace MarketSatis1
         {
             try
             {
+
+                string fis = "      *** MAĞAZA FİŞİ ***\n";
+                fis += "-----------------------------\n";
+                foreach (var item in lstSepet.Items)
+                {
+                    fis += item.ToString() + "\n";
+                }
+
+                fis += "-----------------------------\n";
+
+                fis += $"Toplam Tutar: {txtToplamTutar.Text}\n";
+                fis += $"İndirimli Tutar: {txtIndirimliTutar.Text}\n";
+
+                if (rbNakit.Checked)
+                    fis += "Ödeme Yöntemi: Nakit\n";
+                else if (rbKrediKarti.Checked)
+                    fis += "Ödeme Yöntemi: Kredi Kartı\n";
+
+                fis += "-----------------------------\n";
+                fis += $"Tarih: {DateTime.Now}\n";
+                fis += "        TEŞEKKÜRLER!\n";
+
+                MessageBox.Show(fis, "Sipariş Fişi");
+
                 string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
 
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -309,7 +327,7 @@ namespace MarketSatis1
             this.Hide();
         }
 
-       private void rbNakit_CheckedChanged_1(object sender, EventArgs e)
+        private void rbNakit_CheckedChanged_1(object sender, EventArgs e)
         {
             if (rbNakit.Checked)
             {
@@ -368,6 +386,11 @@ namespace MarketSatis1
             {
                 txtIndirimliTutar.Text = toplam.ToString("C2");
             }
+        }
+
+        private void txtTutar_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

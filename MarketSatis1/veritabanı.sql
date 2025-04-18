@@ -19,6 +19,8 @@ CREATE TABLE urunler (
 
 select * from urunler;
 
+select * from urunler;
+
 -- Siparişler tablosu
 CREATE TABLE IF NOT EXISTS siparisler (
     siparis_id INT AUTO_INCREMENT PRIMARY KEY,

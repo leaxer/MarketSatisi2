@@ -58,9 +58,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 15F);
-            label1.Location = new Point(25, 14);
+            label1.Location = new Point(29, 19);
             label1.Name = "label1";
-            label1.Size = new Size(98, 28);
+            label1.Size = new Size(123, 35);
             label1.TabIndex = 1;
             label1.Text = "ÜRÜNLER";
             label1.Click += label1_Click;
@@ -68,10 +68,10 @@
             // lstUrunler
             // 
             lstUrunler.FormattingEnabled = true;
-            lstUrunler.ItemHeight = 15;
-            lstUrunler.Location = new Point(25, 50);
+            lstUrunler.Location = new Point(29, 67);
+            lstUrunler.Margin = new Padding(3, 4, 3, 4);
             lstUrunler.Name = "lstUrunler";
-            lstUrunler.Size = new Size(256, 229);
+            lstUrunler.Size = new Size(322, 304);
             lstUrunler.TabIndex = 2;
             lstUrunler.SelectedIndexChanged += Ürünler_SelectedIndexChanged;
             // 
@@ -79,9 +79,9 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F);
-            label2.Location = new Point(20, 322);
+            label2.Location = new Point(23, 429);
             label2.Name = "label2";
-            label2.Size = new Size(41, 19);
+            label2.Size = new Size(50, 23);
             label2.TabIndex = 4;
             label2.Text = "Adet:";
             // 
@@ -89,9 +89,9 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10F);
-            label3.Location = new Point(17, 371);
+            label3.Location = new Point(19, 495);
             label3.Name = "label3";
-            label3.Size = new Size(44, 19);
+            label3.Size = new Size(54, 23);
             label3.TabIndex = 5;
             label3.Text = "Tutar:";
             // 
@@ -100,104 +100,95 @@
             contextMenuStrip1.ImageScalingSize = new Size(20, 20);
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { tbToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(86, 26);
+            contextMenuStrip1.Size = new Size(93, 28);
             // 
             // tbToolStripMenuItem
             // 
             tbToolStripMenuItem.Name = "tbToolStripMenuItem";
-            tbToolStripMenuItem.Size = new Size(85, 22);
+            tbToolStripMenuItem.Size = new Size(92, 24);
             tbToolStripMenuItem.Text = "tb";
             // 
             // txtTutar
             // 
-            txtTutar.BackColor = Color.Black;
-            txtTutar.BorderStyle = BorderStyle.None;
-            txtTutar.Location = new Point(88, 388);
-            txtTutar.Margin = new Padding(3, 2, 3, 2);
+            txtTutar.BackColor = Color.White;
+            txtTutar.Location = new Point(101, 495);
             txtTutar.Multiline = true;
             txtTutar.Name = "txtTutar";
-            txtTutar.Size = new Size(54, 2);
+            txtTutar.Size = new Size(95, 25);
             txtTutar.TabIndex = 6;
+            txtTutar.TextChanged += txtTutar_TextChanged;
             // 
             // numAdet
             // 
-            numAdet.Location = new Point(88, 318);
-            numAdet.Margin = new Padding(3, 2, 3, 2);
-            numAdet.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numAdet.Increment = new decimal(new int[] { 0, 0, 0, 0 });
+            numAdet.Location = new Point(101, 424);
             numAdet.Name = "numAdet";
-            numAdet.Size = new Size(82, 23);
+            numAdet.Size = new Size(94, 27);
             numAdet.TabIndex = 7;
             numAdet.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // lstSepet
             // 
             lstSepet.FormattingEnabled = true;
-            lstSepet.ItemHeight = 15;
-            lstSepet.Location = new Point(423, 67);
-            lstSepet.Margin = new Padding(3, 2, 3, 2);
+            lstSepet.Location = new Point(483, 89);
             lstSepet.Name = "lstSepet";
-            lstSepet.Size = new Size(273, 154);
+            lstSepet.Size = new Size(311, 204);
             lstSepet.TabIndex = 8;
             lstSepet.SelectedIndexChanged += Sepet_SelectedIndexChanged;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(423, 41);
+            label4.Location = new Point(483, 55);
             label4.Name = "label4";
-            label4.Size = new Size(36, 15);
+            label4.Size = new Size(47, 20);
             label4.TabIndex = 9;
             label4.Text = "Sepet";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(407, 262);
+            label5.Location = new Point(465, 349);
             label5.Name = "label5";
-            label5.Size = new Size(84, 15);
+            label5.Size = new Size(104, 20);
             label5.TabIndex = 10;
             label5.Text = "Toplam Tutar :";
             // 
             // txtToplamTutar
             // 
-            txtToplamTutar.BackColor = Color.Black;
-            txtToplamTutar.BorderStyle = BorderStyle.None;
-            txtToplamTutar.Location = new Point(516, 275);
-            txtToplamTutar.Margin = new Padding(3, 2, 3, 2);
+            txtToplamTutar.BackColor = Color.White;
+            txtToplamTutar.Location = new Point(590, 344);
             txtToplamTutar.Multiline = true;
             txtToplamTutar.Name = "txtToplamTutar";
-            txtToplamTutar.Size = new Size(54, 2);
+            txtToplamTutar.Size = new Size(102, 26);
             txtToplamTutar.TabIndex = 11;
             txtToplamTutar.TextChanged += textBox1_TextChanged;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(407, 359);
+            label6.Location = new Point(465, 479);
             label6.Name = "label6";
-            label6.Size = new Size(88, 15);
+            label6.Size = new Size(109, 20);
             label6.TabIndex = 12;
             label6.Text = "İndirimli Tutar :";
             // 
             // txtIndirimliTutar
             // 
-            txtIndirimliTutar.BackColor = Color.Black;
-            txtIndirimliTutar.BorderStyle = BorderStyle.None;
-            txtIndirimliTutar.Location = new Point(516, 371);
-            txtIndirimliTutar.Margin = new Padding(3, 2, 3, 2);
+            txtIndirimliTutar.BackColor = Color.White;
+            txtIndirimliTutar.Location = new Point(590, 472);
             txtIndirimliTutar.Multiline = true;
             txtIndirimliTutar.Name = "txtIndirimliTutar";
-            txtIndirimliTutar.Size = new Size(54, 2);
+            txtIndirimliTutar.Size = new Size(102, 27);
             txtIndirimliTutar.TabIndex = 13;
             // 
             // btnToplamTutarHesapla
             // 
             btnToplamTutarHesapla.BackColor = Color.White;
             btnToplamTutarHesapla.FlatStyle = FlatStyle.Flat;
-            btnToplamTutarHesapla.Location = new Point(612, 239);
-            btnToplamTutarHesapla.Margin = new Padding(3, 2, 3, 2);
+            btnToplamTutarHesapla.Location = new Point(734, 315);
             btnToplamTutarHesapla.Name = "btnToplamTutarHesapla";
-            btnToplamTutarHesapla.Size = new Size(176, 50);
+            btnToplamTutarHesapla.Size = new Size(201, 67);
             btnToplamTutarHesapla.TabIndex = 14;
             btnToplamTutarHesapla.Text = "Toplam Tutar Hesapla";
             btnToplamTutarHesapla.UseVisualStyleBackColor = false;
@@ -207,10 +198,9 @@
             // 
             btnHesapla.BackColor = Color.White;
             btnHesapla.FlatStyle = FlatStyle.Popup;
-            btnHesapla.Location = new Point(209, 312);
-            btnHesapla.Margin = new Padding(3, 2, 3, 2);
+            btnHesapla.Location = new Point(239, 416);
             btnHesapla.Name = "btnHesapla";
-            btnHesapla.Size = new Size(98, 32);
+            btnHesapla.Size = new Size(112, 43);
             btnHesapla.TabIndex = 15;
             btnHesapla.Text = "Hesapla";
             btnHesapla.UseVisualStyleBackColor = false;
@@ -220,10 +210,9 @@
             // 
             btnSepeteEkle.BackColor = Color.White;
             btnSepeteEkle.FlatStyle = FlatStyle.Flat;
-            btnSepeteEkle.Location = new Point(209, 363);
-            btnSepeteEkle.Margin = new Padding(3, 2, 3, 2);
+            btnSepeteEkle.Location = new Point(239, 484);
             btnSepeteEkle.Name = "btnSepeteEkle";
-            btnSepeteEkle.Size = new Size(98, 35);
+            btnSepeteEkle.Size = new Size(112, 47);
             btnSepeteEkle.TabIndex = 16;
             btnSepeteEkle.Text = "Sepete Ekle";
             btnSepeteEkle.UseVisualStyleBackColor = false;
@@ -232,19 +221,18 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(335, 314);
+            label7.Location = new Point(383, 419);
             label7.Name = "label7";
-            label7.Size = new Size(99, 15);
+            label7.Size = new Size(123, 20);
             label7.TabIndex = 17;
             label7.Text = "Ödeme Yöntemi :";
             // 
             // rbNakit
             // 
             rbNakit.AutoSize = true;
-            rbNakit.Location = new Point(465, 310);
-            rbNakit.Margin = new Padding(3, 2, 3, 2);
+            rbNakit.Location = new Point(531, 413);
             rbNakit.Name = "rbNakit";
-            rbNakit.Size = new Size(53, 19);
+            rbNakit.Size = new Size(65, 24);
             rbNakit.TabIndex = 18;
             rbNakit.TabStop = true;
             rbNakit.Text = "Nakit";
@@ -254,10 +242,9 @@
             // rbKrediKarti
             // 
             rbKrediKarti.AutoSize = true;
-            rbKrediKarti.Location = new Point(536, 310);
-            rbKrediKarti.Margin = new Padding(3, 2, 3, 2);
+            rbKrediKarti.Location = new Point(613, 413);
             rbKrediKarti.Name = "rbKrediKarti";
-            rbKrediKarti.Size = new Size(79, 19);
+            rbKrediKarti.Size = new Size(100, 24);
             rbKrediKarti.TabIndex = 19;
             rbKrediKarti.TabStop = true;
             rbKrediKarti.Text = "Kredi Kartı";
@@ -268,10 +255,9 @@
             // 
             btnDukkanIslemleri.BackColor = Color.White;
             btnDukkanIslemleri.FlatStyle = FlatStyle.Flat;
-            btnDukkanIslemleri.Location = new Point(652, 393);
-            btnDukkanIslemleri.Margin = new Padding(3, 2, 3, 2);
+            btnDukkanIslemleri.Location = new Point(745, 524);
             btnDukkanIslemleri.Name = "btnDukkanIslemleri";
-            btnDukkanIslemleri.Size = new Size(136, 46);
+            btnDukkanIslemleri.Size = new Size(155, 61);
             btnDukkanIslemleri.TabIndex = 21;
             btnDukkanIslemleri.Text = "Dükkan İşlemleri";
             btnDukkanIslemleri.UseVisualStyleBackColor = false;
@@ -279,10 +265,10 @@
             // 
             // DükkanSayfa
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightBlue;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(947, 600);
             Controls.Add(btnDukkanIslemleri);
             Controls.Add(rbKrediKarti);
             Controls.Add(rbNakit);
@@ -303,6 +289,7 @@
             Controls.Add(lstUrunler);
             Controls.Add(label1);
             ForeColor = SystemColors.ActiveCaptionText;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "DükkanSayfa";
             Text = "DükkanSayfa";
             Load += DükkanSayfa_Load;

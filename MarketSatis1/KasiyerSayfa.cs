@@ -31,6 +31,30 @@ namespace MarketSatis1
         private void KasiyerSayfa_Load(object sender, EventArgs e)
         {
             UrunleriListele();
+            LoadUrunListesi();
+
+            string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string stokQuery = "SELECT SUM(urun_adedi) FROM urunler";
+                    MySqlCommand stokCmd = new MySqlCommand(stokQuery, conn);
+                    object stokSonuc = stokCmd.ExecuteScalar();
+                    txtToplamStok.Text = stokSonuc != DBNull.Value ? stokSonuc.ToString() : "0";
+
+
+                    string satisQuery = "SELECT SUM(siparis_id) FROM siparis_detaylari";
+                    MySqlCommand satisCmd = new MySqlCommand(satisQuery, conn);
+                    object satisSonuc = satisCmd.ExecuteScalar();
+                    txtToplamSatis.Text = satisSonuc != DBNull.Value ? satisSonuc.ToString() : "0";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hata: " + ex.Message);
+                }
+            }
         }
 
         private void UrunleriListele()
@@ -76,6 +100,39 @@ namespace MarketSatis1
                 MessageBox.Show("Bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void LoadUrunListesi()
+        {
+            lstUrunler.Items.Clear();
+
+            string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "SELECT urun_kodu, urun_adi, urun_fiyati, urun_adedi FROM urunler";
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string urunKodu = reader["urun_kodu"].ToString();
+                        string urunAdi = reader["urun_adi"].ToString();
+                        decimal fiyat = Convert.ToDecimal(reader["urun_fiyati"]);
+                        int stok = Convert.ToInt32(reader["urun_adedi"]);
+
+                        lstUrunler.Items.Add($"{urunKodu} - {urunAdi} - ₺{fiyat:N2} - Stok: {stok}");
+                    }
+
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ürün listesi yüklenirken hata oluştu: " + ex.Message);
+                }
+            }
+        }
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -106,87 +163,55 @@ namespace MarketSatis1
 
         }
 
+
         private void btnGuncelle_Click(object sender, EventArgs e)
         {
-            try
+            int urunKodu = (int)numUrunKodu.Value;
+            int eklenecekAdet = (int)numEklenecekAdet.Value;
+
+            if (urunKodu <= 0)
             {
-                string urunKodu = txtUrunKodu.Text.Trim();
-                int eklenecekAdet = Convert.ToInt32(numEklenecekAdet.Value);
+                MessageBox.Show("Lütfen geçerli bir ürün kodu giriniz.");
+                return;
+            }
 
-                if (string.IsNullOrEmpty(urunKodu)) // Ürün kodu boş mu kontrolü
-                {
-                    MessageBox.Show("Lütfen bir ürün kodu giriniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+            string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
                 {
                     connection.Open();
 
-                    string checkQuery = "SELECT urun_adedi FROM urunler WHERE urun_kodu = @urunKodu";
-                    int mevcutAdet = 0;
-                    bool urunBulundu = false;
+                    string selectQuery = "SELECT urun_adedi FROM urunler WHERE urun_kodu = @UrunKodu";
+                    MySqlCommand selectCommand = new MySqlCommand(selectQuery, connection);
+                    selectCommand.Parameters.AddWithValue("@UrunKodu", urunKodu);
 
-                    using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, connection))
+                    object result = selectCommand.ExecuteScalar();
+                    if (result == null)
                     {
-                        checkCmd.Parameters.AddWithValue("@urunKodu", urunKodu);
-
-                        using (MySqlDataReader reader = checkCmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                mevcutAdet = Convert.ToInt32(reader["urun_adedi"]);
-                                urunBulundu = true;
-                            }
-                        }
-                    }
-
-                    if (!urunBulundu)
-                    {
-                        MessageBox.Show("Girilen ürün kodu ile eşleşen ürün bulunamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Bu ürün koduna sahip bir ürün bulunamadı.");
                         return;
                     }
 
-                    int yeniAdet = mevcutAdet + eklenecekAdet;
+                    int mevcutStok = Convert.ToInt32(result);
+                    int yeniStok = mevcutStok + eklenecekAdet;
 
-                    if (yeniAdet < 0)
-                    {
-                        MessageBox.Show("Stok miktarı negatif olamaz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                    string updateQuery = "UPDATE urunler SET urun_adedi = @YeniStok WHERE urun_kodu = @UrunKodu";
+                    MySqlCommand updateCommand = new MySqlCommand(updateQuery, connection);
+                    updateCommand.Parameters.AddWithValue("@YeniStok", yeniStok);
+                    updateCommand.Parameters.AddWithValue("@UrunKodu", urunKodu);
 
-                    string updateQuery = "UPDATE urunler SET urun_adedi = @yeniAdet WHERE urun_kodu = @urunKodu";
+                    updateCommand.ExecuteNonQuery();
 
-                    using (MySqlCommand updateCmd = new MySqlCommand(updateQuery, connection))
-                    {
-                        updateCmd.Parameters.AddWithValue("@yeniAdet", yeniAdet);
-                        updateCmd.Parameters.AddWithValue("@urunKodu", urunKodu);
-
-                        int affectedRows = updateCmd.ExecuteNonQuery();
-
-                        if (affectedRows > 0)
-                        {
-                            MessageBox.Show($"Ürün stok adedi başarıyla güncellendi. Yeni stok: {yeniAdet}", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            txtUrunKodu.Clear();
-                            numEklenecekAdet.Value = 0;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Güncelleme işlemi başarısız oldu.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
+                    MessageBox.Show("Stok başarıyla güncellendi.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hata: " + ex.Message);
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Veritabanı hatası: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
+
 
         private void tabPage3_Click(object sender, EventArgs e)
         {
@@ -270,22 +295,48 @@ namespace MarketSatis1
 
         }
 
+
         private void btnKasiyerEkle_Click(object sender, EventArgs e)
         {
+            string kasiyerAd = txtKasiyerAdi.Text;
+            string kasiyerSoyad = txtKasiyerSoyadi.Text;
+            string kasiyerNo = txtKasiyerNo.Text;
+
             string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                connection.Open();
-                string query = "INSERT INTO kasiyer (kasiyer_adi, kasiyer_soyadi, kasiyer_no) VALUES (@adi, @soyadi, @no)";
-                using (MySqlCommand command = new MySqlCommand(query, connection))
+                try
                 {
-                    command.Parameters.AddWithValue("@adi", txtKasiyerAdi.Text);
-                    command.Parameters.AddWithValue("@soyadi", txtKasiyerSoyadi.Text);
-                    command.Parameters.AddWithValue("@no", txtKasiyerNo.Text);
-                    command.ExecuteNonQuery();
+                    conn.Open();
+                    string sql = "INSERT INTO Kasiyerler (kasiyer_adi, kasiyer_soyadi, kasiyer_no) VALUES (@ad, @soyad, @kasiyerNo)";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@ad", kasiyerAd);
+                    cmd.Parameters.AddWithValue("@soyad", kasiyerSoyad);
+                    cmd.Parameters.AddWithValue("@kasiyerNo", kasiyerNo);
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Kasiyer başarıyla eklendi!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hata: " + ex.Message);
                 }
             }
+        }
+
+        private void txtToplamStok_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtUrunKod_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numUrunKodu_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
