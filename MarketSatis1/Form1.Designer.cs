@@ -28,55 +28,55 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            button1 = new Button();
+            txtKasiyerAdi = new TextBox();
+            txtKasiyerNo = new TextBox();
+            btnGirisYap = new Button();
             label1 = new Label();
             label2 = new Label();
             SuspendLayout();
             // 
-            // textBox1
+            // txtKasiyerAdi
             // 
-            textBox1.Location = new Point(296, 123);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(181, 27);
-            textBox1.TabIndex = 0;
-            textBox1.TextChanged += textBox1_TextChanged;
+            txtKasiyerAdi.Location = new Point(296, 123);
+            txtKasiyerAdi.Name = "txtKasiyerAdi";
+            txtKasiyerAdi.Size = new Size(181, 27);
+            txtKasiyerAdi.TabIndex = 0;
+            txtKasiyerAdi.TextChanged += textBox1_TextChanged;
             // 
-            // textBox2
+            // txtKasiyerNo
             // 
-            textBox2.Location = new Point(296, 196);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(181, 27);
-            textBox2.TabIndex = 1;
+            txtKasiyerNo.Location = new Point(296, 196);
+            txtKasiyerNo.Name = "txtKasiyerNo";
+            txtKasiyerNo.Size = new Size(181, 27);
+            txtKasiyerNo.TabIndex = 1;
             // 
-            // button1
+            // btnGirisYap
             // 
-            button1.Location = new Point(296, 263);
-            button1.Name = "button1";
-            button1.Size = new Size(181, 37);
-            button1.TabIndex = 2;
-            button1.Text = "Giriş Yap";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnGirisYap.Location = new Point(296, 263);
+            btnGirisYap.Name = "btnGirisYap";
+            btnGirisYap.Size = new Size(181, 37);
+            btnGirisYap.TabIndex = 2;
+            btnGirisYap.Text = "Giriş Yap";
+            btnGirisYap.UseVisualStyleBackColor = true;
+            btnGirisYap.Click += btnGirisYap_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Location = new Point(181, 129);
             label1.Name = "label1";
-            label1.Size = new Size(95, 20);
+            label1.Size = new Size(86, 20);
             label1.TabIndex = 3;
-            label1.Text = "Kullanıcı Adı:";
+            label1.Text = "Kasiyer Adı:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(235, 203);
+            label2.Location = new Point(193, 203);
             label2.Name = "label2";
-            label2.Size = new Size(42, 20);
+            label2.Size = new Size(83, 20);
             label2.TabIndex = 4;
-            label2.Text = "Şifre:";
+            label2.Text = "Kasiyer No:";
             label2.Click += label2_Click;
             // 
             // Form1
@@ -86,9 +86,9 @@
             ClientSize = new Size(800, 451);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(button1);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(btnGirisYap);
+            Controls.Add(txtKasiyerNo);
+            Controls.Add(txtKasiyerAdi);
             Name = "Form1";
             Text = "Form1";
             ResumeLayout(false);
@@ -97,9 +97,9 @@
 
         #endregion
 
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private Button button1;
+        private TextBox txtKasiyerAdi;
+        private TextBox txtKasiyerNo;
+        private Button btnGirisYap;
         private Label label1;
         private Label label2;
     }

@@ -9,37 +9,51 @@ namespace MarketSatis1
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnGirisYap_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text == "admin" && textBox2.Text == "admin")
+            string kasiyerAd = txtKasiyerAdi.Text.Trim();
+            string kasiyerNo = txtKasiyerNo.Text.Trim();
+
+            if (kasiyerAd == "" || kasiyerNo == "")
             {
+                MessageBox.Show("Lütfen tüm alanlarý doldurun.");
+                return;
+            }
 
-                string connectionString = "Server=localhost; Database=marketsatis; Uid=root; Pwd=2007;";
-
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+            // Veritabaný baðlantýsý
+            string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
                 {
-                    try
+                    conn.Open();
+                    string query = "SELECT * FROM kasiyerler WHERE kasiyer_no = @no AND kasiyer_adi = @ad";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@no", kasiyerNo);
+                    cmd.Parameters.AddWithValue("@ad", kasiyerAd);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
                     {
-                        connection.Open();
-                        MessageBox.Show("Baðlantý baþarýlý!");
+                        MessageBox.Show("Giriþ baþarýlý!");
+                        Form2 form2 = new Form2();
+                        form2.Show();
+                        this.Hide();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Console.WriteLine("Baðlantý Hatasý: " + ex.Message);
+                        MessageBox.Show("Kasiyer bilgileri hatalý.");
                     }
                 }
-
-                Form2 form2 = new Form2();
-                form2.Show();
-                this.Hide();
-            }
-            else
-            {
-                MessageBox.Show("Kullanýcý adý veya þifre hatalý!");
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hata: " + ex.Message);
+                }
             }
         }
 
-        private void label2_Click(object sender, EventArgs e)
+
+private void label2_Click(object sender, EventArgs e)
         {
 
         }
