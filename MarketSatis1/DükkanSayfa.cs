@@ -17,12 +17,14 @@ namespace MarketSatis1
 
         private List<Urun> urunListesi = new List<Urun>();
         private List<SepetItem> sepetListesi = new List<SepetItem>();
-        private decimal toplamTutar = 0;
+        // private decimal toplamTutar = 0;
         private bool krediKartiSecili = false;
         public DükkanSayfa()
         {
             InitializeComponent();
         }
+
+        string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
 
         public class Urun
         {
@@ -30,7 +32,7 @@ namespace MarketSatis1
             public string UrunAdi { get; set; }
             public decimal Fiyat { get; set; }
             public int Stok { get; set; }
-
+            s
             public override string ToString()
             {
                 return $"{UrunKodu} - {UrunAdi} - {Fiyat:C2}";
@@ -64,8 +66,6 @@ namespace MarketSatis1
             {
                 urunListesi.Clear();
                 lstUrunler.Items.Clear();
-
-                string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
 
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
@@ -180,8 +180,6 @@ namespace MarketSatis1
                 fis += "        TEŞEKKÜRLER!\n";
 
                 MessageBox.Show(fis, "Sipariş Fişi");
-
-                string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
 
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {

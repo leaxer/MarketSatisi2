@@ -39,31 +39,37 @@
             // 
             txtKasiyerAdi.Location = new Point(296, 123);
             txtKasiyerAdi.Name = "txtKasiyerAdi";
+            txtKasiyerAdi.PlaceholderText = "Adınızı giriniz.";
             txtKasiyerAdi.Size = new Size(181, 27);
             txtKasiyerAdi.TabIndex = 0;
             txtKasiyerAdi.TextChanged += textBox1_TextChanged;
             // 
             // txtKasiyerNo
             // 
-            txtKasiyerNo.Location = new Point(296, 196);
+            txtKasiyerNo.Location = new Point(296, 197);
+            txtKasiyerNo.MaxLength = 11;
             txtKasiyerNo.Name = "txtKasiyerNo";
+            txtKasiyerNo.PlaceholderText = "Kasiyer no giriniz.";
             txtKasiyerNo.Size = new Size(181, 27);
             txtKasiyerNo.TabIndex = 1;
             // 
             // btnGirisYap
             // 
-            btnGirisYap.Location = new Point(296, 263);
+            btnGirisYap.BackColor = Color.LightSteelBlue;
+            btnGirisYap.Cursor = Cursors.Hand;
+            btnGirisYap.FlatStyle = FlatStyle.Flat;
+            btnGirisYap.Location = new Point(296, 254);
             btnGirisYap.Name = "btnGirisYap";
             btnGirisYap.Size = new Size(181, 37);
             btnGirisYap.TabIndex = 2;
             btnGirisYap.Text = "Giriş Yap";
-            btnGirisYap.UseVisualStyleBackColor = true;
+            btnGirisYap.UseVisualStyleBackColor = false;
             btnGirisYap.Click += btnGirisYap_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(181, 129);
+            label1.Location = new Point(296, 100);
             label1.Name = "label1";
             label1.Size = new Size(86, 20);
             label1.TabIndex = 3;
@@ -72,7 +78,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(193, 203);
+            label2.Location = new Point(296, 174);
             label2.Name = "label2";
             label2.Size = new Size(83, 20);
             label2.TabIndex = 4;
@@ -83,6 +89,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ControlDark;
             ClientSize = new Size(800, 451);
             Controls.Add(label2);
             Controls.Add(label1);

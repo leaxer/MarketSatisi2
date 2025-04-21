@@ -6,7 +6,7 @@ id int auto_increment primary key,
 kasiyer_adi varchar(50) not null,
 kasiyer_soyadi varchar(50) not null,
 kasiyer_no int
-)
+);
 
 CREATE TABLE urunler (
     id INT AUTO_INCREMENT PRIMARY KEY,

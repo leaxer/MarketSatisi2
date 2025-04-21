@@ -18,6 +18,9 @@ namespace MarketSatis1
             InitializeComponent();
         }
 
+
+        string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
+
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -30,10 +33,8 @@ namespace MarketSatis1
 
         private void KasiyerSayfa_Load(object sender, EventArgs e)
         {
-            UrunleriListele();
-            LoadUrunListesi();
+            UrunleriYukle();
 
-            string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
@@ -57,82 +58,81 @@ namespace MarketSatis1
             }
         }
 
-        private void UrunleriListele()
+        private void UrunleriYukle()
         {
-            lstUrunler.Items.Clear();
-
-            try
-            {
-                string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
-
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    string query = "SELECT urun_kodu, urun_adi, urun_fiyati, urun_adedi FROM urunler ORDER BY urun_kodu";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
-                    {
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                string urunKodu = reader["urun_kodu"].ToString();
-                                string urunAdi = reader["urun_adi"].ToString();
-                                decimal urunFiyati = Convert.ToDecimal(reader["urun_fiyati"]);
-                                int urunStok = Convert.ToInt32(reader["urun_adedi"]);
-
-                                string listItem = $"{urunKodu} - {urunAdi} - {urunFiyati:C2} - Stok: {urunStok}";
-                                lstUrunler.Items.Add(listItem);
-                            }
-                        }
-                    }
-
-                    connection.Close();
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Veritabanı hatası: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void LoadUrunListesi()
-        {
-            lstUrunler.Items.Clear();
-
-            string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {
-                    connection.Open();
-                    string query = "SELECT urun_kodu, urun_adi, urun_fiyati, urun_adedi FROM urunler";
-                    MySqlCommand cmd = new MySqlCommand(query, connection);
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    conn.Open();
+                    string query = "SELECT urun_kodu as urunId, urun_adi as urunAdi, urun_fiyati as urunFiyati, urun_adedi as urunAdedi FROM urunler";
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dataGridView1.DataSource = dt;
 
-                    while (reader.Read())
-                    {
-                        string urunKodu = reader["urun_kodu"].ToString();
-                        string urunAdi = reader["urun_adi"].ToString();
-                        decimal fiyat = Convert.ToDecimal(reader["urun_fiyati"]);
-                        int stok = Convert.ToInt32(reader["urun_adedi"]);
+                    dataGridView1.Columns["urunId"].HeaderText = "ID";
+                    dataGridView1.Columns["urunAdi"].HeaderText = "Ürün";
+                    dataGridView1.Columns["urunFiyati"].HeaderText = "Fiyat (₺)";
+                    dataGridView1.Columns["urunAdedi"].HeaderText = "Stok";
 
-                        lstUrunler.Items.Add($"{urunKodu} - {urunAdi} - ₺{fiyat:N2} - Stok: {stok}");
-                    }
+                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    dataGridView1.Columns["urunId"].Width = 60;
+                    dataGridView1.RowTemplate.Height = 30;
 
-                    reader.Close();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Ürün listesi yüklenirken hata oluştu: " + ex.Message);
+                    MessageBox.Show("Hata oluştu: " + ex.Message);
                 }
             }
         }
+
+
+        //private void UrunleriListele()
+        //{
+        //    lstUrunler.Items.Clear();
+
+        //    try
+        //    {
+        //        string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
+
+        //        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        //        {
+        //            connection.Open();
+
+        //            string query = "SELECT urun_kodu, urun_adi, urun_fiyati, urun_adedi FROM urunler ORDER BY urun_kodu";
+
+        //            using (MySqlCommand cmd = new MySqlCommand(query, connection))
+        //            {
+        //                using (MySqlDataReader reader = cmd.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        string urunKodu = reader["urun_kodu"].ToString();
+        //                        string urunAdi = reader["urun_adi"].ToString();
+        //                        decimal urunFiyati = Convert.ToDecimal(reader["urun_fiyati"]);
+        //                        int urunStok = Convert.ToInt32(reader["urun_adedi"]);
+
+        //                        string listItem = $"{urunKodu} - {urunAdi} - {urunFiyati:C2} - Stok: {urunStok}";
+        //                        lstUrunler.Items.Add(listItem);
+        //                    }
+        //                }
+        //            }
+
+        //            connection.Close();
+        //        }
+        //    }
+        //    catch (MySqlException ex)
+        //    {
+        //        MessageBox.Show("Veritabanı hatası: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -175,7 +175,6 @@ namespace MarketSatis1
                 return;
             }
 
-            string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
@@ -243,7 +242,6 @@ namespace MarketSatis1
                     return;
                 }
 
-                string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
@@ -302,8 +300,6 @@ namespace MarketSatis1
             string kasiyerSoyad = txtKasiyerSoyadi.Text;
             string kasiyerNo = txtKasiyerNo.Text;
 
-            string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
-
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
@@ -335,6 +331,11 @@ namespace MarketSatis1
         }
 
         private void numUrunKodu_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

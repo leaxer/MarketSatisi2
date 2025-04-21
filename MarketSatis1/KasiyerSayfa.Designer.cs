@@ -30,9 +30,9 @@
         {
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            dataGridView1 = new DataGridView();
             btnSatısIslemleri = new Button();
             label1 = new Label();
-            lstUrunler = new ListBox();
             tabPage2 = new TabPage();
             btnEkle = new Button();
             button2 = new Button();
@@ -66,8 +66,10 @@
             label13 = new Label();
             label12 = new Label();
             label11 = new Label();
+            lstUrunler = new ListBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numUrunAdedi).BeginInit();
             tabPage3.SuspendLayout();
@@ -93,9 +95,10 @@
             // 
             // tabPage1
             // 
+            tabPage1.BorderStyle = BorderStyle.Fixed3D;
+            tabPage1.Controls.Add(dataGridView1);
             tabPage1.Controls.Add(btnSatısIslemleri);
             tabPage1.Controls.Add(label1);
-            tabPage1.Controls.Add(lstUrunler);
             tabPage1.Location = new Point(4, 29);
             tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
@@ -105,9 +108,21 @@
             tabPage1.Text = "Ürün Kataloğu";
             tabPage1.UseVisualStyleBackColor = true;
             // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(6, 57);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(472, 326);
+            dataGridView1.TabIndex = 3;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            // 
             // btnSatısIslemleri
             // 
-            btnSatısIslemleri.Location = new Point(327, 331);
+            btnSatısIslemleri.Cursor = Cursors.Hand;
+            btnSatısIslemleri.FlatStyle = FlatStyle.Flat;
+            btnSatısIslemleri.Location = new Point(498, 331);
             btnSatısIslemleri.Margin = new Padding(3, 4, 3, 4);
             btnSatısIslemleri.Name = "btnSatısIslemleri";
             btnSatısIslemleri.Size = new Size(151, 52);
@@ -119,25 +134,16 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(9, 33);
+            label1.Location = new Point(1, 20);
             label1.Name = "label1";
             label1.Size = new Size(104, 20);
             label1.TabIndex = 1;
             label1.Text = "Ürün Kataloğu";
             label1.Click += label1_Click;
             // 
-            // lstUrunler
-            // 
-            lstUrunler.FormattingEnabled = true;
-            lstUrunler.Location = new Point(9, 57);
-            lstUrunler.Margin = new Padding(3, 4, 3, 4);
-            lstUrunler.Name = "lstUrunler";
-            lstUrunler.Size = new Size(291, 324);
-            lstUrunler.TabIndex = 0;
-            lstUrunler.SelectedIndexChanged += listBox1_SelectedIndexChanged;
-            // 
             // tabPage2
             // 
+            tabPage2.BorderStyle = BorderStyle.Fixed3D;
             tabPage2.Controls.Add(btnEkle);
             tabPage2.Controls.Add(button2);
             tabPage2.Controls.Add(numUrunAdedi);
@@ -273,6 +279,7 @@
             // 
             // tabPage3
             // 
+            tabPage3.BorderStyle = BorderStyle.Fixed3D;
             tabPage3.Controls.Add(numUrunKodu);
             tabPage3.Controls.Add(btnGuncelle);
             tabPage3.Controls.Add(button4);
@@ -347,6 +354,7 @@
             // 
             // tabPage4
             // 
+            tabPage4.BorderStyle = BorderStyle.Fixed3D;
             tabPage4.Controls.Add(txtToplamSatis);
             tabPage4.Controls.Add(txtToplamStok);
             tabPage4.Controls.Add(label10);
@@ -396,6 +404,7 @@
             // 
             // tabPage5
             // 
+            tabPage5.BorderStyle = BorderStyle.Fixed3D;
             tabPage5.Controls.Add(btnKasiyerEkle);
             tabPage5.Controls.Add(txtKasiyerNo);
             tabPage5.Controls.Add(txtKasiyerSoyadi);
@@ -473,18 +482,30 @@
             label11.TabIndex = 0;
             label11.Text = "Kasiyer Adı :";
             // 
+            // lstUrunler
+            // 
+            lstUrunler.FormattingEnabled = true;
+            lstUrunler.Location = new Point(685, 362);
+            lstUrunler.Margin = new Padding(3, 4, 3, 4);
+            lstUrunler.Name = "lstUrunler";
+            lstUrunler.Size = new Size(291, 324);
+            lstUrunler.TabIndex = 0;
+            lstUrunler.SelectedIndexChanged += listBox1_SelectedIndexChanged;
+            // 
             // KasiyerSayfa
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 451);
             Controls.Add(tabControl1);
+            Controls.Add(lstUrunler);
             Name = "KasiyerSayfa";
             Text = "KasiyerSayfa";
             Load += KasiyerSayfa_Load;
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numUrunAdedi).EndInit();
@@ -540,5 +561,10 @@
         private TextBox txtKasiyerAdi;
         private Button btnGuncelle;
         private NumericUpDown numUrunKodu;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Ürün;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridView dataGridView1;
     }
 }

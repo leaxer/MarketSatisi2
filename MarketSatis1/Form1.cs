@@ -9,6 +9,8 @@ namespace MarketSatis1
             InitializeComponent();
         }
 
+
+
         private void btnGirisYap_Click(object sender, EventArgs e)
         {
             string kasiyerAd = txtKasiyerAdi.Text.Trim();
@@ -20,7 +22,6 @@ namespace MarketSatis1
                 return;
             }
 
-            // Veritabaný baðlantýsý
             string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
