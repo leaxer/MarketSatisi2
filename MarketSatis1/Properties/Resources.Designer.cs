@@ -59,5 +59,15 @@ namespace MarketSatis1.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   System.Byte[] türünde yerelleştirilmiş bir kaynak arar.
+        /// </summary>
+        internal static byte[] market_logo {
+            get {
+                object obj = ResourceManager.GetObject("market_logo", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

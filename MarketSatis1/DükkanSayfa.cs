@@ -29,7 +29,7 @@ namespace MarketSatis1
 
             // Label ve TextBox bileşenlerini oluştur
             lblUrunSayisi = new Label();
-            lblUrunSayisi.Location = new Point(350, 2);
+            lblUrunSayisi.Location = new Point(330, 5);
             lblUrunSayisi.Size = new Size(200, 23);
             lblUrunSayisi.Font = new Font("Segoe UI", 9);
             tabPage1.Controls.Add(lblUrunSayisi);
@@ -37,8 +37,8 @@ namespace MarketSatis1
             // Arama TextBox oluştur
             txtAra = new Guna.UI2.WinForms.Guna2TextBox();
             txtAra.PlaceholderText = "Ürün ara...";
-            txtAra.Location = new Point(350, 25);
-            txtAra.Size = new Size(200, 36);
+            txtAra.Location = new Point(330, 29);
+            txtAra.Size = new Size(176, 32);
             txtAra.BorderRadius = 5;
             tabPage1.Controls.Add(txtAra);
 
@@ -104,35 +104,67 @@ namespace MarketSatis1
                 guna2DataGridView1.Columns.Clear();
 
                 // Ürün listesi için sütunlar ekle
-                guna2DataGridView1.Columns.Add("UrunKodu", "Ürün Kodu");
-                guna2DataGridView1.Columns.Add("UrunAdi", "Ürün Adı");
-                guna2DataGridView1.Columns.Add("Fiyat", "Fiyat");
-                guna2DataGridView1.Columns.Add("Stok", "Stok");
-                guna2DataGridView1.Columns.Add("Tanim", "Tanım");
+                DataGridViewTextBoxColumn urunKoduColumn = new DataGridViewTextBoxColumn();
+                urunKoduColumn.Name = "UrunKodu";
+                urunKoduColumn.HeaderText = "Ürün Kodu";
+                urunKoduColumn.Width = 98;
 
-                // Sütun genişlikleri ayarla
-                guna2DataGridView1.Columns["UrunKodu"].Width = 90;
-                guna2DataGridView1.Columns["UrunAdi"].Width = 170;
-                guna2DataGridView1.Columns["Fiyat"].Width = 70;
-                guna2DataGridView1.Columns["Stok"].Width = 60;
-                guna2DataGridView1.Columns["Tanim"].Width = 180;
+                DataGridViewTextBoxColumn urunAdiColumn = new DataGridViewTextBoxColumn();
+                urunAdiColumn.Name = "UrunAdi";
+                urunAdiColumn.HeaderText = "Ürün Adı";
+                urunAdiColumn.Width = 97;
+
+                DataGridViewTextBoxColumn fiyatColumn = new DataGridViewTextBoxColumn();
+                fiyatColumn.Name = "Fiyat";
+                fiyatColumn.HeaderText = "Fiyat";
+                fiyatColumn.Width = 98;
+
+                DataGridViewTextBoxColumn stokColumn = new DataGridViewTextBoxColumn();
+                stokColumn.Name = "Stok";
+                stokColumn.HeaderText = "Stok";
+                stokColumn.Width = 97;
+
+                DataGridViewTextBoxColumn tanimColumn = new DataGridViewTextBoxColumn();
+                tanimColumn.Name = "Tanim";
+                tanimColumn.HeaderText = "Tanım";
+                tanimColumn.Width = 98;
+
+                guna2DataGridView1.Columns.AddRange(new DataGridViewColumn[] { 
+                    urunKoduColumn, urunAdiColumn, fiyatColumn, stokColumn, tanimColumn 
+                });
 
                 // Sepet DataGridView sütunlarını temizle ve yeniden yapılandır
                 guna2DataGridView2.Columns.Clear();
 
                 // Sepet için sütunlar ekle
-                guna2DataGridView2.Columns.Add("UrunKodu", "Ürün Kodu");
-                guna2DataGridView2.Columns.Add("UrunAdi", "Ürün Adı");
-                guna2DataGridView2.Columns.Add("BirimFiyat", "Birim Fiyat");
-                guna2DataGridView2.Columns.Add("Adet", "Adet");
-                guna2DataGridView2.Columns.Add("ToplamFiyat", "Toplam Fiyat");
+                DataGridViewTextBoxColumn sepetKoduColumn = new DataGridViewTextBoxColumn();
+                sepetKoduColumn.Name = "UrunKodu";
+                sepetKoduColumn.HeaderText = "Ürün Kodu";
+                sepetKoduColumn.Width = 98;
 
-                // Sepet sütun genişlikleri ayarla
-                guna2DataGridView2.Columns["UrunKodu"].Width = 80;
-                guna2DataGridView2.Columns["UrunAdi"].Width = 150;
-                guna2DataGridView2.Columns["BirimFiyat"].Width = 90;
-                guna2DataGridView2.Columns["Adet"].Width = 50;
-                guna2DataGridView2.Columns["ToplamFiyat"].Width = 110;
+                DataGridViewTextBoxColumn sepetAdiColumn = new DataGridViewTextBoxColumn();
+                sepetAdiColumn.Name = "UrunAdi";
+                sepetAdiColumn.HeaderText = "Ürün Adı";
+                sepetAdiColumn.Width = 97;
+
+                DataGridViewTextBoxColumn birimFiyatColumn = new DataGridViewTextBoxColumn();
+                birimFiyatColumn.Name = "BirimFiyat";
+                birimFiyatColumn.HeaderText = "Birim Fiyat";
+                birimFiyatColumn.Width = 98;
+
+                DataGridViewTextBoxColumn adetColumn = new DataGridViewTextBoxColumn();
+                adetColumn.Name = "Adet";
+                adetColumn.HeaderText = "Adet";
+                adetColumn.Width = 97;
+
+                DataGridViewTextBoxColumn toplamFiyatColumn = new DataGridViewTextBoxColumn();
+                toplamFiyatColumn.Name = "ToplamFiyat";
+                toplamFiyatColumn.HeaderText = "Toplam Fiyat";
+                toplamFiyatColumn.Width = 98;
+
+                guna2DataGridView2.Columns.AddRange(new DataGridViewColumn[] { 
+                    sepetKoduColumn, sepetAdiColumn, birimFiyatColumn, adetColumn, toplamFiyatColumn 
+                });
 
                 // DataGridView'lerin genel ayarları
                 foreach (DataGridView dgv in new[] { guna2DataGridView1, guna2DataGridView2 })
@@ -353,20 +385,75 @@ namespace MarketSatis1
                 return;
             }
 
-            DataGridViewRow selectedRow = guna2DataGridView1.SelectedRows[0];
-            Urun seciliUrun = (Urun)selectedRow.Tag;
-            int adet = (int)guna2NumericUpDown1.Value;
-
-            if (adet <= 0)
+            try
             {
-                MessageBox.Show("Lütfen geçerli bir miktar giriniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                DataGridViewRow selectedRow = guna2DataGridView1.SelectedRows[0];
+                Urun seciliUrun = (Urun)selectedRow.Tag;
+                int adet = (int)guna2NumericUpDown1.Value;
+
+                if (adet <= 0)
+                {
+                    MessageBox.Show("Lütfen geçerli bir miktar giriniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (seciliUrun.Stok < adet)
+                {
+                    MessageBox.Show($"Stokta yeterli ürün bulunmamaktadır. Mevcut stok: {seciliUrun.Stok}", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    guna2NumericUpDown1.Value = seciliUrun.Stok;
+                    return;
+                }
+
+                // Sepette aynı ürün var mı kontrol et
+                SepetItem mevcut = sepetListesi.FirstOrDefault(item => item.UrunKodu == seciliUrun.UrunKodu);
+
+                if (mevcut != null)
+                {
+                    // Toplam stok kontrolü
+                    if (seciliUrun.Stok < (mevcut.Adet + adet))
+                    {
+                        MessageBox.Show($"Bu kadar ürün eklenemez. Mevcut stok: {seciliUrun.Stok}, Sepetteki miktar: {mevcut.Adet}", 
+                            "Stok Yetersiz", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // Ürün zaten sepette, miktarı güncelle
+                    mevcut.Adet += adet;
+                    mevcut.ToplamFiyat = mevcut.BirimFiyat * mevcut.Adet;
+                }
+                else
+                {
+                    // Yeni ürün ekle
+                    SepetItem yeniItem = new SepetItem
+                    {
+                        UrunKodu = seciliUrun.UrunKodu,
+                        UrunAdi = seciliUrun.UrunAdi,
+                        BirimFiyat = seciliUrun.Fiyat,
+                        Adet = adet,
+                        ToplamFiyat = seciliUrun.Fiyat * adet
+                    };
+
+                    sepetListesi.Add(yeniItem);
+                }
+
+                // Stok miktarını güncelle
+                seciliUrun.Stok -= adet;
+
+                // Arayüzü güncelle
+                SepetiGuncelle();
+                UrunleriListele();
+                SepetDurumunuGuncelle();
+                ToplamTutariGuncelle();
+
+                MessageBox.Show("Ürün sepete eklendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Sepet sekmesine geç
+                guna2TabControl1.SelectedIndex = 1;
             }
-
-            SepeteUrunEkle(seciliUrun.UrunKodu, seciliUrun.UrunAdi, seciliUrun.Fiyat, adet);
-
-            // Sepet sayfasına geç
-            guna2TabControl1.SelectedIndex = 1;
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ürün sepete eklenirken bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnSepetGit_Click(object sender, EventArgs e)
@@ -600,8 +687,6 @@ namespace MarketSatis1
                 if (seciliUrun == null)
                     return;
 
-                // Ürün detaylarını panelde göster
-
                 // Stok kontrolü
                 if (seciliUrun.Stok <= 0)
                 {
@@ -612,42 +697,14 @@ namespace MarketSatis1
                 // NumericUpDown değerini güncelle
                 guna2NumericUpDown1.Maximum = seciliUrun.Stok;
                 guna2NumericUpDown1.Value = 1;
-                decimal tutar = seciliUrun.Fiyat * 1;
+                
+                // Tutar hesapla
+                decimal tutar = seciliUrun.Fiyat * guna2NumericUpDown1.Value;
                 guna2TextBox1.Text = tutar.ToString("C2");
-
-                // Ürünü sepette kontrol et
-                SepetItem existingItem = sepetListesi.FirstOrDefault(item => item.UrunKodu == seciliUrun.UrunKodu);
-
-                if (existingItem != null)
-                {
-                    // Sepetteki miktarı artır
-                    existingItem.Adet++;
-                    existingItem.ToplamFiyat = existingItem.BirimFiyat * existingItem.Adet;
-                }
-                else
-                {
-                    // Yeni sepet öğesi ekle
-                    SepetItem yeniItem = new SepetItem
-                    {
-                        UrunKodu = seciliUrun.UrunKodu,
-                        UrunAdi = seciliUrun.UrunAdi,
-                        BirimFiyat = seciliUrun.Fiyat,
-                        Adet = 1,
-                        ToplamFiyat = seciliUrun.Fiyat * 1
-                    };
-
-                    sepetListesi.Add(yeniItem);
-                }
-
-                // Sepet DataGridView'ini güncelle
-                SepetiGuncelle();
-
-                // Toplam tutarı güncelle
-                ToplamTutariGuncelle();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ürün eklenirken bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ürün seçilirken bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -750,6 +807,9 @@ namespace MarketSatis1
 
                 // Sepet durumunu güncelle
                 SepetDurumunuGuncelle();
+
+                // Toplam tutarı güncelle
+                ToplamTutariGuncelle();
             }
             catch (Exception ex)
             {
@@ -761,59 +821,31 @@ namespace MarketSatis1
         {
             try
             {
-                if (sepetItem == null)
+                // Stok miktarını geri ekle
+                Urun seciliUrun = urunListesi.FirstOrDefault(u => u.UrunKodu == sepetItem.UrunKodu);
+                if (seciliUrun != null)
                 {
-                    MessageBox.Show("Geçersiz sepet öğesi", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    seciliUrun.Stok += sepetItem.Adet;
                 }
 
-                // Sepet listesinden çıkar
+                // Ürünü sepetten çıkar
                 sepetListesi.Remove(sepetItem);
 
-                // DataGridView'den çıkar
-                foreach (DataGridViewRow row in guna2DataGridView2.Rows)
-                {
-                    if (row.Tag is SepetItem item && item == sepetItem)
-                    {
-                        guna2DataGridView2.Rows.Remove(row);
-                        break;
-                    }
-                }
+                // DataGridView'i güncelle
+                SepetiGuncelle();
 
-                // Stok miktarını geri ekle
-                Urun urun = urunListesi.FirstOrDefault(u => u.UrunKodu == sepetItem.UrunKodu);
-                if (urun != null)
-                {
-                    urun.Stok += sepetItem.Adet;
+                // Ürün listesini güncelle
+                UrunleriListele();
 
-                    // Ürünler DataGridView'inde stok değerini güncelle
-                    foreach (DataGridViewRow row in guna2DataGridView1.Rows)
-                    {
-                        if (row.Tag is Urun rowUrun && rowUrun.UrunKodu == urun.UrunKodu)
-                        {
-                            row.Cells["Stok"].Value = urun.Stok;
-                            break;
-                        }
-                    }
-                }
+                // Sepet durumunu güncelle
+                SepetDurumunuGuncelle();
 
                 // Toplam tutarı güncelle
-                if (sepetListesi.Count > 0)
-                {
-                    HesaplaToplam();
-                }
-                else
-                {
-                    guna2TextBox3.Clear();
-                    guna2TextBox4.Clear();
-                    guna2Button4.Visible = false;
-                }
-
-                MessageBox.Show($"{sepetItem.Adet} adet {sepetItem.UrunAdi} sepetten çıkarıldı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ToplamTutariGuncelle();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ürün sepetten çıkarılırken bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Sepetten ürün çıkarılırken bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -1,3 +1,5 @@
+using System;
+using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 namespace MarketSatis1
@@ -9,21 +11,17 @@ namespace MarketSatis1
             InitializeComponent();
         }
 
-
-
         private void btnGirisYap_Click(object sender, EventArgs e)
         {
-            // Test edilirken kullanýyoruz.
             Form2 form2 = new Form2();
             form2.Show();
             this.Hide();
-
             //string kasiyerAd = txtKasiyerAdi.Text.Trim();
             //string kasiyerNo = txtKasiyerNo.Text.Trim();
 
-            //if (kasiyerAd == "" || kasiyerNo == "")
+            //if (string.IsNullOrEmpty(kasiyerAd) || string.IsNullOrEmpty(kasiyerNo))
             //{
-            //    MessageBox.Show("Lütfen tüm alanlarý doldurun.");
+            //    MessageBox.Show("LÃ¼tfen tÃ¼m alanlarÄ± doldurun.", "UyarÄ±", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             //    return;
             //}
 
@@ -41,30 +39,33 @@ namespace MarketSatis1
             //        MySqlDataReader reader = cmd.ExecuteReader();
             //        if (reader.HasRows)
             //        {
-            //            MessageBox.Show("Giriþ baþarýlý!");
             //            Form2 form2 = new Form2();
             //            form2.Show();
             //            this.Hide();
             //        }
             //        else
             //        {
-            //            MessageBox.Show("Kasiyer bilgileri hatalý.");
+            //            MessageBox.Show("Kasiyer bilgileri hatalÄ±.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //        }
             //    }
             //    catch (Exception ex)
             //    {
-            //        MessageBox.Show("Hata: " + ex.Message);
+            //        MessageBox.Show("BaÄŸlantÄ± hatasÄ±: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //    }
             //}
         }
 
-
-private void label2_Click(object sender, EventArgs e)
+        private void txtKasiyerAdi_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void guna2ControlBox1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void logoPictureBox_Click(object sender, EventArgs e)
         {
 
         }

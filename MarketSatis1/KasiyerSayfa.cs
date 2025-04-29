@@ -56,30 +56,33 @@ namespace MarketSatis1
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT CAST(urun_kodu AS SIGNED) as urunId, urun_adi as urunAdi, " +
-                                 "urun_fiyati as urunFiyati, urun_adedi as urunAdedi, urun_tanimi as urunTanimi " +
+                    string query = "SELECT urun_kodu, urun_adi, " +
+                                 "urun_fiyati, urun_adedi, urun_tanimi " +
                                  "FROM urunler ORDER BY CAST(urun_kodu AS SIGNED)";
 
                     MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
 
-                    // urunId sütununun veri tipini int olarak ayarla
-                    dt.Columns["urunId"].DataType = typeof(int);
-
+                    // DataGridView'e veri kaynağını ata
                     guna2DataGridView1.DataSource = dt;
 
-                    guna2DataGridView1.Columns["urunId"].HeaderText = "Ürün Kodu";
-                    guna2DataGridView1.Columns["urunAdi"].HeaderText = "Ürün Adı";
-                    guna2DataGridView1.Columns["urunFiyati"].HeaderText = "Fiyat (₺)";
-                    guna2DataGridView1.Columns["urunAdedi"].HeaderText = "Stok";
-                    guna2DataGridView1.Columns["urunTanimi"].HeaderText = "Tanım";
+                    // Sütun başlıklarını ayarla
+                    guna2DataGridView1.Columns["urun_kodu"].HeaderText = "Ürün Kodu";
+                    guna2DataGridView1.Columns["urun_adi"].HeaderText = "Ürün Adı";
+                    guna2DataGridView1.Columns["urun_fiyati"].HeaderText = "Fiyat (₺)";
+                    guna2DataGridView1.Columns["urun_adedi"].HeaderText = "Stok";
+                    guna2DataGridView1.Columns["urun_tanimi"].HeaderText = "Tanım";
 
-                    guna2DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                    guna2DataGridView1.RowTemplate.Height = 30;
+                    // Sütun genişliklerini ayarla
+                    guna2DataGridView1.Columns["urun_kodu"].Width = 98;
+                    guna2DataGridView1.Columns["urun_adi"].Width = 97;
+                    guna2DataGridView1.Columns["urun_fiyati"].Width = 98;
+                    guna2DataGridView1.Columns["urun_adedi"].Width = 97;
+                    guna2DataGridView1.Columns["urun_tanimi"].Width = 98;
 
                     // Para formatını ayarla
-                    guna2DataGridView1.Columns["urunFiyati"].DefaultCellStyle.Format = "N2";
+                    guna2DataGridView1.Columns["urun_fiyati"].DefaultCellStyle.Format = "N2";
 
                     // Sıralama ayarları
                     foreach (DataGridViewColumn column in guna2DataGridView1.Columns)
@@ -150,7 +153,7 @@ namespace MarketSatis1
                         command.Parameters.AddWithValue("@UrunKodu", urunKodu);
                         command.Parameters.AddWithValue("@UrunAdi", guna2TextBox2.Text.Trim());
                         command.Parameters.AddWithValue("@UrunFiyati", urunFiyati);
-                        command.Parameters.AddWithValue("@UrunAdedi", (int)guna2NumericUpDown2.Value);
+                        command.Parameters.AddWithValue("@UrunAdedi", (int)guna2NumericUpDown3.Value);
                         command.Parameters.AddWithValue("@UrunTanimi", guna2ComboBox1.Text.Trim());
 
                         command.ExecuteNonQuery();
@@ -163,7 +166,7 @@ namespace MarketSatis1
                     guna2TextBox1.Clear();
                     guna2TextBox2.Clear();
                     guna2TextBox3.Clear();
-                    guna2NumericUpDown2.Value = 0;
+                    guna2NumericUpDown3.Value = 0;
                     guna2ComboBox1.SelectedIndex = -1;
                 }
             }
@@ -258,7 +261,7 @@ namespace MarketSatis1
         {
 
         }
-        
+
         private void guna2ControlBox1_Click(object sender, EventArgs e)
         {
             Form2 form2 = new Form2();
@@ -298,7 +301,7 @@ namespace MarketSatis1
                     {
                         selectCommand.Parameters.AddWithValue("@UrunKodu", urunKodu);
                         object result = selectCommand.ExecuteScalar();
-                        
+
                         if (result == null || result == DBNull.Value)
                         {
                             MessageBox.Show("Bu ürün koduna sahip bir ürün bulunamadı.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -345,6 +348,11 @@ namespace MarketSatis1
         private void guna2HtmlLabel4_Click(object sender, EventArgs e)
         {
             // Boş event handler
+        }
+
+        private void guna2NumericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
