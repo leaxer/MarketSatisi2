@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using Guna.UI2.WinForms;
+using System.IO;
 
 namespace MarketSatis1
 {
@@ -16,6 +18,8 @@ namespace MarketSatis1
         public KasiyerSayfa()
         {
             InitializeComponent();
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
 
@@ -35,6 +39,9 @@ namespace MarketSatis1
         {
             UrunleriYukle();
 
+            // Varsayılan olarak resim butonunu ekle
+            OlusturResimSecmeButonu();
+
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
@@ -43,13 +50,13 @@ namespace MarketSatis1
                     string stokQuery = "SELECT SUM(urun_adedi) FROM urunler";
                     MySqlCommand stokCmd = new MySqlCommand(stokQuery, conn);
                     object stokSonuc = stokCmd.ExecuteScalar();
-                    txtToplamStok.Text = stokSonuc != DBNull.Value ? stokSonuc.ToString() : "0";
+                    guna2TextBox4.Text = stokSonuc != DBNull.Value ? stokSonuc.ToString() : "0";
 
 
                     string satisQuery = "SELECT SUM(siparis_id) FROM siparis_detaylari";
                     MySqlCommand satisCmd = new MySqlCommand(satisQuery, conn);
                     object satisSonuc = satisCmd.ExecuteScalar();
-                    txtToplamSatis.Text = satisSonuc != DBNull.Value ? satisSonuc.ToString() : "0";
+                    guna2TextBox5.Text = satisSonuc != DBNull.Value ? satisSonuc.ToString() : "0";
                 }
                 catch (Exception ex)
                 {
@@ -69,16 +76,16 @@ namespace MarketSatis1
                     MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
-                    dataGridView1.DataSource = dt;
+                    guna2DataGridView1.DataSource = dt;
 
-                    dataGridView1.Columns["urunId"].HeaderText = "ID";
-                    dataGridView1.Columns["urunAdi"].HeaderText = "Ürün";
-                    dataGridView1.Columns["urunFiyati"].HeaderText = "Fiyat (₺)";
-                    dataGridView1.Columns["urunAdedi"].HeaderText = "Stok";
+                    guna2DataGridView1.Columns["urunId"].HeaderText = "ID";
+                    guna2DataGridView1.Columns["urunAdi"].HeaderText = "Ürün";
+                    guna2DataGridView1.Columns["urunFiyati"].HeaderText = "Fiyat (₺)";
+                    guna2DataGridView1.Columns["urunAdedi"].HeaderText = "Stok";
 
-                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                    dataGridView1.Columns["urunId"].Width = 60;
-                    dataGridView1.RowTemplate.Height = 30;
+                    guna2DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    guna2DataGridView1.Columns["urunId"].Width = 60;
+                    guna2DataGridView1.RowTemplate.Height = 30;
 
                 }
                 catch (Exception ex)
@@ -166,8 +173,8 @@ namespace MarketSatis1
 
         private void btnGuncelle_Click(object sender, EventArgs e)
         {
-            int urunKodu = (int)numUrunKodu.Value;
-            int eklenecekAdet = (int)numEklenecekAdet.Value;
+            int urunKodu = (int)guna2NumericUpDown1.Value;
+            int eklenecekAdet = (int)guna2NumericUpDown2.Value;
 
             if (urunKodu <= 0)
             {
@@ -200,9 +207,16 @@ namespace MarketSatis1
                     updateCommand.Parameters.AddWithValue("@YeniStok", yeniStok);
                     updateCommand.Parameters.AddWithValue("@UrunKodu", urunKodu);
 
-                    updateCommand.ExecuteNonQuery();
-
-                    MessageBox.Show("Stok başarıyla güncellendi.");
+                    int affectedRows = updateCommand.ExecuteNonQuery();
+                    if (affectedRows > 0)
+                    {
+                        MessageBox.Show("Stok başarıyla güncellendi.");
+                        UrunleriYukle();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Stok güncellenirken bir hata oluştu.");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -217,67 +231,213 @@ namespace MarketSatis1
 
         }
 
-        private void btnEkle_Click(object sender, EventArgs e)
+        // Resim seçme alanlarını tanımla
+        private Guna.UI2.WinForms.Guna2PictureBox urunResim;
+        private Guna.UI2.WinForms.Guna2Button btnResimSec;
+        private string secilenResimYolu = "";
+
+        // Resim seçme alanını oluşturan metot
+        private void OlusturResimSecmeButonu()
         {
             try
             {
-                string urunKodu = txtUrunKodu.Text;
-                string urunTanimi = cmbUrunTanimi.Text;
-                string urunAdi = txtUrunAdi.Text;
-                decimal urunFiyati = 0;
-
-                if (!decimal.TryParse(txtUrunFiyati.Text.Replace('.', ','), out urunFiyati) &&
-                    !decimal.TryParse(txtUrunFiyati.Text.Replace(',', '.'), out urunFiyati))
+                if (tabPage2.Controls.Find("urunResim", true).Length == 0)
                 {
-                    MessageBox.Show("Lütfen geçerli bir ürün fiyatı giriniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                    // PictureBox oluştur
+                    urunResim = new Guna.UI2.WinForms.Guna2PictureBox();
+                    urunResim.Name = "urunResim";
+                    urunResim.Size = new Size(150, 150);
+                    urunResim.Location = new Point(20, 120);
+                    urunResim.BorderRadius = 10;
+                    urunResim.SizeMode = PictureBoxSizeMode.Zoom;
+                    urunResim.BorderStyle = BorderStyle.FixedSingle;
+                    tabPage2.Controls.Add(urunResim);
 
-                int urunAdedi = Convert.ToInt32(numUrunAdedi.Value);
-
-                if (string.IsNullOrEmpty(urunKodu) || string.IsNullOrEmpty(urunTanimi) ||
-                    string.IsNullOrEmpty(urunAdi))
-                {
-                    MessageBox.Show("Lütfen tüm alanları doldurunuz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    string query = "INSERT INTO urunler (urun_kodu, urun_tanimi, urun_adi, urun_fiyati, urun_adedi) " +
-                                  "VALUES (@urunKodu, @urunTanimi, @urunAdi, @urunFiyati, @urunAdedi)";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    // Varsayılan resim
+                    try
                     {
-                        cmd.Parameters.AddWithValue("@urunKodu", urunKodu);
-                        cmd.Parameters.AddWithValue("@urunTanimi", urunTanimi);
-                        cmd.Parameters.AddWithValue("@urunAdi", urunAdi);
-                        cmd.Parameters.AddWithValue("@urunFiyati", urunFiyati);
-                        cmd.Parameters.AddWithValue("@urunAdedi", urunAdedi);
-
-                        cmd.ExecuteNonQuery();
+                        if (Properties.Resources.ResourceManager.GetObject("default_product") != null)
+                        {
+                            urunResim.Image = (Image)Properties.Resources.ResourceManager.GetObject("default_product");
+                        }
+                    }
+                    catch
+                    {
+                        // Varsayılan resim yoksa boş bırak
                     }
 
-                    connection.Close();
+                    // Resim seç butonu
+                    btnResimSec = new Guna.UI2.WinForms.Guna2Button();
+                    btnResimSec.Name = "btnResimSec";
+                    btnResimSec.Text = "Resim Seç";
+                    btnResimSec.Size = new Size(150, 36);
+                    btnResimSec.Location = new Point(20, 280);
+                    btnResimSec.BorderRadius = 8;
+                    btnResimSec.FillColor = Color.FromArgb(72, 72, 176);
+                    btnResimSec.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+                    btnResimSec.ForeColor = Color.White;
+                    btnResimSec.Click += BtnResimSec_Click;
+                    tabPage2.Controls.Add(btnResimSec);
                 }
-
-                MessageBox.Show("Ürün başarıyla kaydedildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                txtUrunKodu.Clear();
-                cmbUrunTanimi.Text = "";
-                txtUrunAdi.Clear();
-                txtUrunFiyati.Clear();
-                numUrunAdedi.Value = 0;
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Veritabanı hatası: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Resim seçme alanı oluşturulurken hata: " + ex.Message);
+            }
+        }
+
+        // Resim seçme butonu için olay işleyici
+        private void BtnResimSec_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = "Ürün Resmi Seç";
+                openFileDialog.Filter = "Resim Dosyaları|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+                openFileDialog.Multiselect = false;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    secilenResimYolu = openFileDialog.FileName;
+                    try
+                    {
+                        using (FileStream fs = new FileStream(secilenResimYolu, FileMode.Open, FileAccess.Read))
+                        {
+                            urunResim.Image = Image.FromStream(fs);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Resim yüklenirken hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void btnEkle_Click(object sender, EventArgs e)
+        {
+            
+            int urunKodu;
+            if (!int.TryParse(guna2TextBox1.Text, out urunKodu))
+            {
+                MessageBox.Show("Ürün kodu sayısal olmalıdır.");
+                return;
+            }
+
+            string urunAdi = guna2TextBox3.Text.Trim();
+            if (string.IsNullOrEmpty(urunAdi))
+            {
+                MessageBox.Show("Ürün adı boş olamaz.");
+                return;
+            }
+
+            decimal urunFiyati;
+            if (!decimal.TryParse(guna2TextBox2.Text, out urunFiyati) || urunFiyati <= 0)
+            {
+                MessageBox.Show("Geçerli bir ürün fiyatı giriniz.");
+                return;
+            }
+
+            int urunAdedi = (int)guna2NumericUpDown3.Value;
+            string urunTanimi = guna2ComboBox1.Text;
+
+            // Resmi base64'e çevir
+            string resimBase64 = "";
+            if (!string.IsNullOrEmpty(secilenResimYolu) && File.Exists(secilenResimYolu))
+            {
+                try
+                {
+                    byte[] imageBytes = File.ReadAllBytes(secilenResimYolu);
+                    resimBase64 = Convert.ToBase64String(imageBytes);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Resim dönüştürülürken hata: " + ex.Message);
+                }
+            }
+            else if (urunResim != null && urunResim.Image != null)
+            {
+                try
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        urunResim.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        byte[] imageBytes = ms.ToArray();
+                        resimBase64 = Convert.ToBase64String(imageBytes);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Resim dönüştürülürken hata: " + ex.Message);
+                }
+            }
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string checkQuery = "SELECT COUNT(*) FROM urunler WHERE urun_kodu = @UrunKodu";
+                    MySqlCommand checkCommand = new MySqlCommand(checkQuery, connection);
+                    checkCommand.Parameters.AddWithValue("@UrunKodu", urunKodu);
+
+                    int existingCount = Convert.ToInt32(checkCommand.ExecuteScalar());
+                    if (existingCount > 0)
+                    {
+                        MessageBox.Show("Bu ürün kodu zaten kullanılmaktadır.");
+                        return;
+                    }
+
+                    // SQL sorgusuna resim alanını ekle
+                    string insertQuery = "INSERT INTO urunler (urun_kodu, urun_adi, urun_fiyati, urun_adedi, urun_tanimi, urun_resim) VALUES (@UrunKodu, @UrunAdi, @UrunFiyati, @UrunAdedi, @UrunTanimi, @UrunResim)";
+                    MySqlCommand insertCommand = new MySqlCommand(insertQuery, connection);
+                    insertCommand.Parameters.AddWithValue("@UrunKodu", urunKodu);
+                    insertCommand.Parameters.AddWithValue("@UrunAdi", urunAdi);
+                    insertCommand.Parameters.AddWithValue("@UrunFiyati", urunFiyati);
+                    insertCommand.Parameters.AddWithValue("@UrunAdedi", urunAdedi);
+                    insertCommand.Parameters.AddWithValue("@UrunTanimi", urunTanimi);
+                    insertCommand.Parameters.AddWithValue("@UrunResim", resimBase64);
+
+                    int affectedRows = insertCommand.ExecuteNonQuery();
+                    if (affectedRows > 0)
+                    {
+                        MessageBox.Show("Ürün başarıyla eklendi.");
+                        UrunleriYukle();
+
+                        // Form alanlarını temizle
+                        guna2TextBox1.Clear();
+                        guna2TextBox3.Clear();
+                        guna2TextBox2.Clear();
+                        guna2NumericUpDown3.Value = 0;
+                        guna2ComboBox1.SelectedIndex = -1;
+                        secilenResimYolu = "";
+                        
+                        // Resmi varsayılana çevir
+                        try
+                        {
+                            if (Properties.Resources.ResourceManager.GetObject("default_product") != null)
+                            {
+                                urunResim.Image = (Image)Properties.Resources.ResourceManager.GetObject("default_product");
+                            }
+                            else
+                            {
+                                urunResim.Image = null;
+                            }
+                        }
+                        catch
+                        {
+                            urunResim.Image = null;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ürün eklenirken bir hata oluştu.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hata: " + ex.Message);
+                }
             }
         }
 
@@ -296,22 +456,46 @@ namespace MarketSatis1
 
         private void btnKasiyerEkle_Click(object sender, EventArgs e)
         {
-            string kasiyerAd = txtKasiyerAdi.Text;
-            string kasiyerSoyad = txtKasiyerSoyadi.Text;
-            string kasiyerNo = txtKasiyerNo.Text;
+            string kasiyerAdi = guna2TextBox6.Text.Trim();
+            string kasiyerSoyadi = guna2TextBox7.Text.Trim();
+            int kasiyerNo;
 
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            if (!int.TryParse(guna2TextBox8.Text, out kasiyerNo))
+            {
+                MessageBox.Show("Kasiyer numarası sayısal olmalıdır.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(kasiyerAdi) || string.IsNullOrEmpty(kasiyerSoyadi))
+            {
+                MessageBox.Show("Kasiyer adı ve soyadı boş bırakılamaz.");
+                return;
+            }
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
                 {
-                    conn.Open();
-                    string sql = "INSERT INTO Kasiyerler (kasiyer_adi, kasiyer_soyadi, kasiyer_no) VALUES (@ad, @soyad, @kasiyerNo)";
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@ad", kasiyerAd);
-                    cmd.Parameters.AddWithValue("@soyad", kasiyerSoyad);
-                    cmd.Parameters.AddWithValue("@kasiyerNo", kasiyerNo);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Kasiyer başarıyla eklendi!");
+                    connection.Open();
+
+                    string insertQuery = "INSERT INTO kasiyerler (kasiyer_no, kasiyer_adi, kasiyer_soyadi) VALUES (@KasiyerNo, @KasiyerAdi, @KasiyerSoyadi)";
+                    MySqlCommand command = new MySqlCommand(insertQuery, connection);
+                    command.Parameters.AddWithValue("@KasiyerNo", kasiyerNo);
+                    command.Parameters.AddWithValue("@KasiyerAdi", kasiyerAdi);
+                    command.Parameters.AddWithValue("@KasiyerSoyadi", kasiyerSoyadi);
+
+                    int affectedRows = command.ExecuteNonQuery();
+                    if (affectedRows > 0)
+                    {
+                        MessageBox.Show("Kasiyer başarıyla eklendi.");
+                        guna2TextBox6.Clear();
+                        guna2TextBox7.Clear();
+                        guna2TextBox8.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Kasiyer eklenirken bir hata oluştu.");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -335,9 +519,20 @@ namespace MarketSatis1
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void txtToplamSatis_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+        
+        private void guna2ControlBox1_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.Show();
+            this.Hide();
         }
     }
 }
