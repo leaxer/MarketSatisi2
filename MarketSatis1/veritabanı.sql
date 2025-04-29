@@ -19,9 +19,7 @@ CREATE TABLE urunler (
 
 select * from urunler;
 
-select * from urunler;
-
--- Siparişler tablosu
+-- Siparisler tablosu
 CREATE TABLE IF NOT EXISTS siparisler (
     siparis_id INT AUTO_INCREMENT PRIMARY KEY,
     siparis_tarihi DATETIME NOT NULL,
@@ -29,7 +27,7 @@ CREATE TABLE IF NOT EXISTS siparisler (
     odeme_yontemi VARCHAR(20) NOT NULL
 );
 
--- Sipariş detayları tablosu
+-- Siparis detaylari tablosu
 CREATE TABLE IF NOT EXISTS siparis_detaylari (
     detay_id INT AUTO_INCREMENT PRIMARY KEY,
     siparis_id INT NOT NULL,

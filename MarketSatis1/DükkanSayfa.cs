@@ -21,12 +21,6 @@ namespace MarketSatis1
         private Label lblUrunSayisi;
         private Guna.UI2.WinForms.Guna2TextBox txtAra;
 
-        // Ürün resmi, adı ve fiyatını gösterecek bileşenler
-        private Guna.UI2.WinForms.Guna2PictureBox urunResim;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblUrunAdi;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblUrunFiyat;
-        private Guna.UI2.WinForms.Guna2Panel urunDetayPanel;
-
         public DükkanSayfa()
         {
             InitializeComponent();
@@ -35,7 +29,7 @@ namespace MarketSatis1
 
             // Label ve TextBox bileşenlerini oluştur
             lblUrunSayisi = new Label();
-            lblUrunSayisi.Location = new Point(20, 530);
+            lblUrunSayisi.Location = new Point(350, 2);
             lblUrunSayisi.Size = new Size(200, 23);
             lblUrunSayisi.Font = new Font("Segoe UI", 9);
             tabPage1.Controls.Add(lblUrunSayisi);
@@ -43,7 +37,7 @@ namespace MarketSatis1
             // Arama TextBox oluştur
             txtAra = new Guna.UI2.WinForms.Guna2TextBox();
             txtAra.PlaceholderText = "Ürün ara...";
-            txtAra.Location = new Point(20, 540);
+            txtAra.Location = new Point(350, 25);
             txtAra.Size = new Size(200, 36);
             txtAra.BorderRadius = 5;
             tabPage1.Controls.Add(txtAra);
@@ -60,7 +54,6 @@ namespace MarketSatis1
             public string UrunAdi { get; set; }
             public decimal Fiyat { get; set; }
             public int Stok { get; set; }
-            public string ResimBase64 { get; set; }
 
             public override string ToString()
             {
@@ -88,18 +81,16 @@ namespace MarketSatis1
 
         private void DükkanSayfa_Load(object sender, EventArgs e)
         {
-            // Ürün detay panelini oluştur
-            OlusturUrunDetayPaneli();
-            
+
             KonfigureDataGridViews();
-            
+
             // DataGridView görünümlerini iyileştir
             IyilestirDataGridViewGorunumu(guna2DataGridView1);
             IyilestirDataGridViewGorunumu(guna2DataGridView2);
-            
+
             UrunleriYukle();
             SepetDurumunuGuncelle(); // Sepet durumunu güncelle
-            
+
             // Event handler'ları ekle
             txtAra.TextChanged += txtAra_TextChanged;
             guna2DataGridView1.CellClick += guna2DataGridView1_CellClick;
@@ -173,11 +164,11 @@ namespace MarketSatis1
             dataGridView.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(72, 72, 176);
             dataGridView.ThemeStyle.HeaderStyle.ForeColor = Color.White;
             dataGridView.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            
+
             // Satır renkleri
             dataGridView.ThemeStyle.RowsStyle.BackColor = Color.White;
             dataGridView.ThemeStyle.AlternatingRowsStyle.BackColor = Color.FromArgb(240, 240, 240);
-            
+
             // Seçili satır rengi
             dataGridView.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(125, 124, 184);
             dataGridView.ThemeStyle.RowsStyle.SelectionForeColor = Color.White;
@@ -196,10 +187,10 @@ namespace MarketSatis1
                 {
                     connection.Open();
 
-                    // Tüm ürünleri getiren sorgu - resim de dahil
-                    string query = "SELECT urun_kodu, urun_adi, urun_fiyati, urun_adedi, urun_tanimi, urun_resim " +
-                                   "FROM urunler " +
-                                   "ORDER BY urun_adi";
+                    // Tüm ürünleri getiren sorgu
+                    string query = "SELECT urun_kodu, urun_adi, urun_fiyati, urun_adedi, urun_tanimi " +
+                                 "FROM urunler " +
+                                 "ORDER BY CAST(urun_kodu AS SIGNED)";
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
@@ -213,13 +204,6 @@ namespace MarketSatis1
                                 decimal fiyat = Convert.ToDecimal(reader["urun_fiyati"]);
                                 int stok = Convert.ToInt32(reader["urun_adedi"]);
                                 string tanim = reader["urun_tanimi"].ToString();
-                                
-                                // Resim verisini oku
-                                string resimBase64 = string.Empty;
-                                if (!reader.IsDBNull(reader.GetOrdinal("urun_resim")))
-                                {
-                                    resimBase64 = reader["urun_resim"].ToString();
-                                }
 
                                 // Urun nesnesi oluştur
                                 Urun urun = new Urun
@@ -227,8 +211,7 @@ namespace MarketSatis1
                                     UrunKodu = urunKodu,
                                     UrunAdi = urunAd,
                                     Fiyat = fiyat,
-                                    Stok = stok,
-                                    ResimBase64 = resimBase64
+                                    Stok = stok
                                 };
 
                                 // Urun listesine ekle
@@ -242,12 +225,21 @@ namespace MarketSatis1
                     }
                 }
 
+                // Sıralama ayarları
+                foreach (DataGridViewColumn column in guna2DataGridView1.Columns)
+                {
+                    column.SortMode = DataGridViewColumnSortMode.Automatic;
+                }
+
+                // DataGridView'in sıralama olayını ayarla
+                guna2DataGridView1.Sort(guna2DataGridView1.Columns["UrunKodu"], System.ComponentModel.ListSortDirection.Ascending);
+
                 // Ürün sayısını göster
                 lblUrunSayisi.Text = $"Toplam {guna2DataGridView1.Rows.Count} ürün listelendi";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ürünler yüklenirken bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ürünler yüklenirken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -364,15 +356,15 @@ namespace MarketSatis1
             DataGridViewRow selectedRow = guna2DataGridView1.SelectedRows[0];
             Urun seciliUrun = (Urun)selectedRow.Tag;
             int adet = (int)guna2NumericUpDown1.Value;
-            
+
             if (adet <= 0)
             {
                 MessageBox.Show("Lütfen geçerli bir miktar giriniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
+
             SepeteUrunEkle(seciliUrun.UrunKodu, seciliUrun.UrunAdi, seciliUrun.Fiyat, adet);
-            
+
             // Sepet sayfasına geç
             guna2TabControl1.SelectedIndex = 1;
         }
@@ -500,7 +492,7 @@ namespace MarketSatis1
 
             DataGridViewRow selectedRow = guna2DataGridView2.SelectedRows[0];
             SepetItem seciliItem = (SepetItem)selectedRow.Tag;
-            
+
             SepettenCikar(seciliItem);
         }
 
@@ -542,19 +534,19 @@ namespace MarketSatis1
         private string GetUrunTanimi(string urunKodu)
         {
             string tanim = "Belirtilmemiş";
-            
+
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
                     string query = "SELECT urun_tanimi FROM urunler WHERE urun_kodu = @urunKodu";
-                    
+
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@urunKodu", urunKodu);
                         var result = command.ExecuteScalar();
-                        
+
                         if (result != null && result != DBNull.Value)
                         {
                             tanim = result.ToString();
@@ -566,10 +558,10 @@ namespace MarketSatis1
             {
                 // Hata durumunda varsayılan tanım döndür
             }
-            
+
             return tanim;
         }
-        
+
         private void UrunleriListele()
         {
             // DataGridView'i temizle
@@ -580,7 +572,7 @@ namespace MarketSatis1
             {
                 // Veritabanından ürün tanımını al
                 string urunTanimi = GetUrunTanimi(urun.UrunKodu);
-                
+
                 int rowIndex = guna2DataGridView1.Rows.Add(
                     urun.UrunKodu,
                     urun.UrunAdi,
@@ -607,9 +599,8 @@ namespace MarketSatis1
 
                 if (seciliUrun == null)
                     return;
-                
+
                 // Ürün detaylarını panelde göster
-                GosterUrunDetay(seciliUrun);
 
                 // Stok kontrolü
                 if (seciliUrun.Stok <= 0)
@@ -722,7 +713,7 @@ namespace MarketSatis1
 
                 // Sepette aynı ürün var mı kontrol et
                 SepetItem mevcut = sepetListesi.FirstOrDefault(item => item.UrunKodu == urunKodu);
-                
+
                 if (mevcut != null)
                 {
                     // Ürün zaten sepette, miktarı güncelle
@@ -731,7 +722,7 @@ namespace MarketSatis1
                         MessageBox.Show($"Bu kadar stok yok! Mevcut stok: {seciliUrun.Stok}", "Stok Yetersiz", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    
+
                     mevcut.Adet += adet;
                     mevcut.ToplamFiyat = mevcut.BirimFiyat * mevcut.Adet;
                 }
@@ -746,17 +737,17 @@ namespace MarketSatis1
                         Adet = adet,
                         ToplamFiyat = birimFiyat * adet
                     };
-                    
+
                     sepetListesi.Add(yeniItem);
                 }
 
                 // DataGridView'i güncelle
                 SepetiGuncelle();
-                
+
                 // Stok miktarını güncelle
                 seciliUrun.Stok -= adet;
                 UrunleriListele(); // Güncel stok durumunu göster
-                
+
                 // Sepet durumunu güncelle
                 SepetDurumunuGuncelle();
             }
@@ -765,7 +756,7 @@ namespace MarketSatis1
                 MessageBox.Show("Sepete ürün eklenirken bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
+
         private void SepettenCikar(SepetItem sepetItem)
         {
             try
@@ -909,91 +900,15 @@ namespace MarketSatis1
         {
             // Siparişi Onayla butonunu, sepette ürün varsa görünür yap, yoksa gizle
             guna2Button4.Visible = sepetListesi.Count > 0;
-            
+
             // Toplam tutarı güncelle
             decimal toplam = sepetListesi.Sum(item => item.ToplamFiyat);
             guna2TextBox3.Text = toplam.ToString("C2");
         }
 
-        private void OlusturUrunDetayPaneli()
+        private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Panel oluştur
-            urunDetayPanel = new Guna.UI2.WinForms.Guna2Panel();
-            urunDetayPanel.Size = new Size(400, 150);
-            urunDetayPanel.Location = new Point(guna2GroupBox1.Location.X, guna2GroupBox1.Location.Y - 160);
-            urunDetayPanel.BorderRadius = 10;
-            urunDetayPanel.FillColor = Color.FromArgb(240, 240, 240);
-            urunDetayPanel.ShadowDecoration.Enabled = true;
-            urunDetayPanel.ShadowDecoration.Depth = 5;
-            urunDetayPanel.ShadowDecoration.Color = Color.FromArgb(200, 200, 200);
-            tabPage1.Controls.Add(urunDetayPanel);
-            
-            // Ürün resmi için PictureBox
-            urunResim = new Guna.UI2.WinForms.Guna2PictureBox();
-            urunResim.Size = new Size(120, 120);
-            urunResim.Location = new Point(20, 15);
-            urunResim.BorderRadius = 10;
-            urunResim.SizeMode = PictureBoxSizeMode.Zoom;
-            urunResim.Image = Properties.Resources.default_product; // Varsayılan resim (eğer yoksa oluşturmanız gerekecek)
-            urunDetayPanel.Controls.Add(urunResim);
-            
-            // Ürün adı etiketi
-            lblUrunAdi = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            lblUrunAdi.Size = new Size(240, 40);
-            lblUrunAdi.Location = new Point(160, 20);
-            lblUrunAdi.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            lblUrunAdi.Text = "Ürün seçilmedi";
-            urunDetayPanel.Controls.Add(lblUrunAdi);
-            
-            // Ürün fiyatı etiketi
-            lblUrunFiyat = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            lblUrunFiyat.Size = new Size(240, 30);
-            lblUrunFiyat.Location = new Point(160, 70);
-            lblUrunFiyat.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-            lblUrunFiyat.ForeColor = Color.FromArgb(72, 72, 176);
-            lblUrunFiyat.Text = "";
-            urunDetayPanel.Controls.Add(lblUrunFiyat);
-            
-            // Stok bilgisi etiketi
-            Guna.UI2.WinForms.Guna2HtmlLabel lblStok = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            lblStok.Size = new Size(240, 30);
-            lblStok.Location = new Point(160, 100);
-            lblStok.Font = new Font("Segoe UI", 9, FontStyle.Regular);
-            lblStok.ForeColor = Color.DarkGray;
-            lblStok.Text = "Stok: 0";
-            urunDetayPanel.Controls.Add(lblStok);
-        }
 
-        private void GosterUrunDetay(Urun urun)
-        {
-            // Ürün adını ve fiyatını güncelle
-            lblUrunAdi.Text = urun.UrunAdi;
-            lblUrunFiyat.Text = urun.Fiyat.ToString("C2");
-            
-            // Stok bilgisini güncelle
-            Guna.UI2.WinForms.Guna2HtmlLabel lblStok = (Guna.UI2.WinForms.Guna2HtmlLabel)urunDetayPanel.Controls[3]; // Stok etiketi
-            lblStok.Text = $"Stok: {urun.Stok}";
-            
-            // Ürün resmini göster
-            try
-            {
-                if (!string.IsNullOrEmpty(urun.ResimBase64))
-                {
-                    byte[] imageBytes = Convert.FromBase64String(urun.ResimBase64);
-                    using (MemoryStream ms = new MemoryStream(imageBytes))
-                    {
-                        urunResim.Image = Image.FromStream(ms);
-                    }
-                }
-                else
-                {
-                    urunResim.Image = Properties.Resources.default_product;
-                }
-            }
-            catch
-            {
-                urunResim.Image = Properties.Resources.default_product; 
-            }
         }
     }
 }
