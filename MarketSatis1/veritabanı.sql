@@ -15,7 +15,7 @@ CREATE TABLE urunler (
     urun_adi VARCHAR(100) NOT NULL,
     urun_fiyati DECIMAL(10,2) NOT NULL,
     urun_adedi INT NOT NULL,
-    urun_resmi LONGTEXT,
+	urun_alis  decimal(10,2),
     UNIQUE (urun_kodu)
 );
 

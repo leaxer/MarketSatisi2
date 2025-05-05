@@ -117,7 +117,7 @@
             guna2HtmlLabel13 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel12 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lstUrunler = new ListBox();
-            guna2Panel1.SuspendLayout();
+            guna2DataGridView1.SuspendLayout();
             guna2TabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView1).BeginInit();
@@ -846,13 +846,6 @@
             guna2HtmlLabel12.Size = new Size(81, 17);
             guna2HtmlLabel12.TabIndex = 0;
             guna2HtmlLabel12.Text = "Kasiyer Soyadı:";
-            // 
-            // lstUrunler
-            // 
-            lstUrunler.Location = new Point(0, 0);
-            lstUrunler.Name = "lstUrunler";
-            lstUrunler.Size = new Size(120, 96);
-            lstUrunler.TabIndex = 0;
             // 
             // KasiyerSayfa
             // 

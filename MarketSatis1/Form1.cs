@@ -13,46 +13,47 @@ namespace MarketSatis1
 
         private void btnGirisYap_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2();
-            form2.Show();
-            this.Hide();
-            //string kasiyerAd = txtKasiyerAdi.Text.Trim();
-            //string kasiyerNo = txtKasiyerNo.Text.Trim();
+            //Form2 form2 = new Form2();
+            //form2.Show(); Test yaparken kullanılır.
+            //this.Hide();
 
-            //if (string.IsNullOrEmpty(kasiyerAd) || string.IsNullOrEmpty(kasiyerNo))
-            //{
-            //    MessageBox.Show("Lütfen tüm alanları doldurun.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
+            string kasiyerAd = txtKasiyerAdi.Text.Trim();
+            string kasiyerNo = txtKasiyerNo.Text.Trim();
 
-            //string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
-            //using (MySqlConnection conn = new MySqlConnection(connectionString))
-            //{
-            //    try
-            //    {
-            //        conn.Open();
-            //        string query = "SELECT * FROM kasiyerler WHERE kasiyer_no = @no AND kasiyer_adi = @ad";
-            //        MySqlCommand cmd = new MySqlCommand(query, conn);
-            //        cmd.Parameters.AddWithValue("@no", kasiyerNo);
-            //        cmd.Parameters.AddWithValue("@ad", kasiyerAd);
+            if (string.IsNullOrEmpty(kasiyerAd) || string.IsNullOrEmpty(kasiyerNo))
+            {
+                MessageBox.Show("Lütfen tüm alanları doldurun.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            //        MySqlDataReader reader = cmd.ExecuteReader();
-            //        if (reader.HasRows)
-            //        {
-            //            Form2 form2 = new Form2();
-            //            form2.Show();
-            //            this.Hide();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Kasiyer bilgileri hatalı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Bağlantı hatası: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    }
-            //}
+            string connectionString = "Server=localhost;Database=marketsatis;Uid=root;Pwd=2007;";
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT * FROM kasiyerler WHERE kasiyer_no = @no AND kasiyer_adi = @ad";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@no", kasiyerNo);
+                    cmd.Parameters.AddWithValue("@ad", kasiyerAd);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        Form2 form2 = new Form2();
+                        form2.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Kasiyer bilgileri hatalı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Bağlantı hatası: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void txtKasiyerAdi_TextChanged(object sender, EventArgs e)

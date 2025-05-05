@@ -32,15 +32,17 @@ namespace MarketSatis1
                 try
                 {
                     conn.Open();
+                    // Toplam stok miktarını hesapla
                     string stokQuery = "SELECT SUM(urun_adedi) FROM urunler";
                     MySqlCommand stokCmd = new MySqlCommand(stokQuery, conn);
                     object stokSonuc = stokCmd.ExecuteScalar();
                     guna2TextBox4.Text = stokSonuc != DBNull.Value ? stokSonuc.ToString() : "0";
 
-                    string satisQuery = "SELECT SUM(siparis_id) FROM siparis_detaylari";
+                    // Toplam sipariş sayısını hesapla
+                    string satisQuery = "SELECT COUNT(DISTINCT siparis_id) FROM siparisler";
                     MySqlCommand satisCmd = new MySqlCommand(satisQuery, conn);
                     object satisSonuc = satisCmd.ExecuteScalar();
-                    guna2TextBox5.Text = satisSonuc != DBNull.Value ? satisSonuc.ToString() : "0";
+                    guna2TextBox5.Text = satisSonuc != DBNull.Value ? satisSonuc.ToString() + " adet sipariş" : "0 adet sipariş";
                 }
                 catch (Exception ex)
                 {
