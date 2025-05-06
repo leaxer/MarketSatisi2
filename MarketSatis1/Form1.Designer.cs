@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -83,12 +84,15 @@
             // logoPictureBox
             // 
             logoPictureBox.BackColor = Color.Transparent;
+            logoPictureBox.BackgroundImage = (Image)resources.GetObject("logoPictureBox.BackgroundImage");
+            logoPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
             logoPictureBox.CustomizableEdges = customizableEdges1;
+            logoPictureBox.FillColor = Color.Transparent;
             logoPictureBox.ImageRotate = 0F;
-            logoPictureBox.Location = new Point(84, 90);
+            logoPictureBox.Location = new Point(12, 90);
             logoPictureBox.Name = "logoPictureBox";
             logoPictureBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            logoPictureBox.Size = new Size(200, 200);
+            logoPictureBox.Size = new Size(322, 210);
             logoPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             logoPictureBox.TabIndex = 0;
             logoPictureBox.TabStop = false;
@@ -99,9 +103,9 @@
             lblMarketSatis.BackColor = Color.Transparent;
             lblMarketSatis.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
             lblMarketSatis.ForeColor = Color.White;
-            lblMarketSatis.Location = new Point(74, 326);
+            lblMarketSatis.Location = new Point(36, 322);
             lblMarketSatis.Name = "lblMarketSatis";
-            lblMarketSatis.Size = new Size(232, 47);
+            lblMarketSatis.Size = new Size(284, 56);
             lblMarketSatis.TabIndex = 1;
             lblMarketSatis.Text = "MARKET SATIŞ";
             lblMarketSatis.TextAlignment = ContentAlignment.MiddleCenter;
@@ -111,9 +115,9 @@
             lblSatisYonetim.BackColor = Color.Transparent;
             lblSatisYonetim.Font = new Font("Segoe UI", 14F);
             lblSatisYonetim.ForeColor = Color.White;
-            lblSatisYonetim.Location = new Point(102, 379);
+            lblSatisYonetim.Location = new Point(68, 375);
             lblSatisYonetim.Name = "lblSatisYonetim";
-            lblSatisYonetim.Size = new Size(182, 27);
+            lblSatisYonetim.Size = new Size(222, 33);
             lblSatisYonetim.TabIndex = 2;
             lblSatisYonetim.Text = "Satış Yönetim Sistemi";
             lblSatisYonetim.TextAlignment = ContentAlignment.MiddleCenter;
@@ -171,7 +175,7 @@
             lblKasiyerGirisi.ForeColor = Color.White;
             lblKasiyerGirisi.Location = new Point(100, 40);
             lblKasiyerGirisi.Name = "lblKasiyerGirisi";
-            lblKasiyerGirisi.Size = new Size(170, 39);
+            lblKasiyerGirisi.Size = new Size(202, 47);
             lblKasiyerGirisi.TabIndex = 0;
             lblKasiyerGirisi.Text = "Kasiyer Girişi";
             lblKasiyerGirisi.TextAlignment = ContentAlignment.MiddleCenter;
@@ -186,6 +190,7 @@
             txtKasiyerAdi.Font = new Font("Segoe UI", 11F);
             txtKasiyerAdi.ForeColor = Color.White;
             txtKasiyerAdi.Location = new Point(50, 150);
+            txtKasiyerAdi.Margin = new Padding(3, 4, 3, 4);
             txtKasiyerAdi.Name = "txtKasiyerAdi";
             txtKasiyerAdi.PlaceholderForeColor = Color.Silver;
             txtKasiyerAdi.PlaceholderText = "Kasiyer Adı";
@@ -205,6 +210,7 @@
             txtKasiyerNo.Font = new Font("Segoe UI", 11F);
             txtKasiyerNo.ForeColor = Color.White;
             txtKasiyerNo.Location = new Point(50, 220);
+            txtKasiyerNo.Margin = new Padding(3, 4, 3, 4);
             txtKasiyerNo.Name = "txtKasiyerNo";
             txtKasiyerNo.PlaceholderForeColor = Color.Silver;
             txtKasiyerNo.PlaceholderText = "Kasiyer No";

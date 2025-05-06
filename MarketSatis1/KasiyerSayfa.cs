@@ -107,7 +107,8 @@ namespace MarketSatis1
                 if (string.IsNullOrWhiteSpace(guna2TextBox1.Text) ||
                     string.IsNullOrWhiteSpace(guna2TextBox2.Text) ||
                     string.IsNullOrWhiteSpace(guna2TextBox3.Text) ||
-                    string.IsNullOrWhiteSpace(guna2ComboBox1.Text))
+                    string.IsNullOrWhiteSpace(guna2ComboBox1.Text) ||
+                    string.IsNullOrWhiteSpace(txtUrunAlis.Text))
                 {
                     MessageBox.Show("Lütfen tüm alanları doldurunuz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -129,6 +130,14 @@ namespace MarketSatis1
                     return;
                 }
 
+                // Alış fiyatı kontrolü
+                decimal urunAlisFiyati;
+                if (!decimal.TryParse(txtUrunAlis.Text.Trim(), out urunAlisFiyati) || urunAlisFiyati <= 0)
+                {
+                    MessageBox.Show("Lütfen geçerli bir ürün alış fiyatı giriniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
@@ -147,8 +156,8 @@ namespace MarketSatis1
                     }
 
                     // Ürün ekleme
-                    string insertQuery = "INSERT INTO urunler (urun_kodu, urun_adi, urun_fiyati, urun_adedi, urun_tanimi) " +
-                                      "VALUES (@UrunKodu, @UrunAdi, @UrunFiyati, @UrunAdedi, @UrunTanimi)";
+                    string insertQuery = "INSERT INTO urunler (urun_kodu, urun_adi, urun_fiyati, urun_adedi, urun_tanimi, urun_alis) " +
+                                      "VALUES (@UrunKodu, @UrunAdi, @UrunFiyati, @UrunAdedi, @UrunTanimi, @UrunAlise)";
 
                     using (MySqlCommand command = new MySqlCommand(insertQuery, connection))
                     {
@@ -157,6 +166,7 @@ namespace MarketSatis1
                         command.Parameters.AddWithValue("@UrunFiyati", urunFiyati);
                         command.Parameters.AddWithValue("@UrunAdedi", (int)guna2NumericUpDown3.Value);
                         command.Parameters.AddWithValue("@UrunTanimi", guna2ComboBox1.Text.Trim());
+                        command.Parameters.AddWithValue("@UrunAlise", urunAlisFiyati);
 
                         command.ExecuteNonQuery();
                     }
@@ -170,6 +180,7 @@ namespace MarketSatis1
                     guna2TextBox3.Clear();
                     guna2NumericUpDown3.Value = 0;
                     guna2ComboBox1.SelectedIndex = -1;
+                    txtUrunAlis.Clear();
                 }
             }
             catch (Exception ex)
@@ -356,6 +367,12 @@ namespace MarketSatis1
         {
 
         }
+
+        private void guna2HtmlLabel3_Click(object sender, EventArgs e)
+        {
+            // Boş event handler
+        }
+
     }
 }
  
