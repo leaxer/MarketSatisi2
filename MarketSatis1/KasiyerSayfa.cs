@@ -71,7 +71,6 @@ namespace MarketSatis1
 
                     guna2DataGridView1.DataSource = dt;
 
-                    // Sütun başlıklarını ayarla
                     string[] columnMappings = {
                         "urun_kodu", "Ürün Kodu",
                         "urun_adi", "Ürün Adı",
@@ -86,10 +85,8 @@ namespace MarketSatis1
                         guna2DataGridView1.Columns[columnMappings[i]].HeaderText = columnMappings[i + 1];
                     }
 
-                    // Görünüm ayarları
                     DataGridViewGorunumAyarla(guna2DataGridView1);
 
-                    // Sıralama ayarları
                     foreach (DataGridViewColumn column in guna2DataGridView1.Columns)
                     {
                         column.SortMode = DataGridViewColumnSortMode.Automatic;
